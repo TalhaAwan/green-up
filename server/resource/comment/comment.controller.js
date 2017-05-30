@@ -14,12 +14,13 @@ const Controller = {};
     console.log("In Create", req.body)
     var comment = {
         text: req.body.text,
-        guestUser: {
-            name: req.body.name,
-            email: req.body.email
-        },
         page: req.params.id
     };
+
+    req.body.name? comment["name"] = req.body.name : null;
+    req.body.email? comment["email"] = req.body.email : null;
+
+
 
 
     Comment.create(comment, function(err, comment){
@@ -31,7 +32,7 @@ const Controller = {};
             res.render('page/component/page/comment', {
                 // page: {
                 //     _id: req.params.id,
-                    comments: [comment],
+                comments: [comment],
                 // },
                 moment: moment
             })

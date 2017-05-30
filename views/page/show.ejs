@@ -54,10 +54,30 @@
          <? } ?>
 
          <form id="page-comment<?=page._id?>" name="page-comment" >
-          <div class="form-group">
-            <!-- <label>Add Comment</label> -->
-            <input type="email" name="email">
-            <textarea class="form-control" rows="3" name="text"></textarea>
+           <div >
+
+           <div class="row form-group">
+           <div class="col-sm-6">
+              <input class="form-control" type="email" name="email" placeholder="Email">
+            </div>
+           </div>
+
+           <div class="row form-group">
+              <div class="col-sm-6">
+              <input class="form-control" type="name" name="name" placeholder="Name">
+            </div>
+           </div>
+
+           <div class="row form-group">
+           <div class="col-sm-12">
+              <textarea class="form-control" rows="7" name="text" placeholder="Comment"></textarea>
+            </div>
+           </div>
+            
+         
+
+            
+
           </div>
           <button  type="button" class="btn btn-primary" onclick="addComment('page', '<?=page._id?>')">Comment</button>
         </form>
