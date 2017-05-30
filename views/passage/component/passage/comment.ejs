@@ -1,0 +1,26 @@
+          <? comments.forEach(function(comment, index) { ?>
+          <div  class="passage" id="comment<?=comment._id?>" data-id="<?=comment._id?>" data-date="<?- comment.updatedAt ?>">
+             <div class="row comment-block" >
+
+             
+               <div class="col-lg-12">
+                    <b><?= comment.guestUser.name ?></b><br>
+                    <span class="small-font"><?=   moment(comment.updatedAt).format('MMM D, YYYY [at] h:mm:ss a');  ?> </span>
+                    <br>
+                    <br>
+               </div>
+
+                 <div class="col-lg-12">
+                    <!-- style="white-space: pre-wrap;" -->
+                    <span ><?= comment.text ?></span>
+
+               </div>
+
+
+
+          </div>
+
+          <hr style="margin-top: 10px; margin-bottom: 10px;">
+     </div>
+
+     <? }); ?>

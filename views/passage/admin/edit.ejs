@@ -1,0 +1,89 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<? include ../../partials/head ?>
+<body>
+
+
+	<? include ../../partials/admin/header ?>
+
+	<!-- Page Content -->
+	<div class="container">
+
+		<!-- Page Heading/Breadcrumbs -->
+		<div class="row">
+			<div class="col-lg-12">
+				<h1 class="page-header">Edit Passage
+					<small><a href="/admin/passages/<?= passage.slug ?>"><?= passage.slug?></a> </small>
+				</h1>
+
+			</div>
+		</div>
+		<!-- /.row -->
+
+		<!-- Projects Row -->
+		<div class="row">
+			<div class="col-lg-12">
+				<div ng-app="tarjumaAdmin" ng-controller='tarjumaController' ng-init='init("<?= passage.statement ?>")'>
+					
+
+					<form action="/admin/passages/<?= passage._id ?>?_method=PUT" method="POST" novalidate>
+						<div class="control-group form-group">
+							<div class="controls">
+								<label>Title</label>
+								<input type="text" name="title"  value="<?= passage.title ?>" class="form-control" required data-validation-required-message="Please enter title.">
+								<p class="help-block"></p>
+							</div>
+						</div>
+						<div class="control-group form-group">
+							<div class="controls">
+								<label> Statement </label>
+								<text-angular ng-model="statement" name="statement"></text-angular>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-primary">Update</button>
+
+					</form>
+
+
+
+				</div>
+			</div>
+		</div>
+		<!-- /.row -->
+
+
+	</div>
+	<!-- /.container -->
+
+	<? include ../../partials/footer ?>
+
+</body>
+<script>
+	(function() {
+		angular.module('tarjumaAdmin', ['textAngular']).controller('tarjumaController', ['$scope', function ($scope) {
+			console.log("tarjumaAdmin");
+			$scope.init = function(statement){
+				console.log(statement)
+				$scope.statement = statement;
+			}
+
+		}]);
+	})();
+</script>
+
+
+</html>

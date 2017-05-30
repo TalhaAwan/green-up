@@ -1,0 +1,105 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<? include ../../partials/head ?>
+<body>
+
+
+    <? include ../../partials/admin/header ?>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Page Heading/Breadcrumbs -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Passages
+                </h1>
+
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="statusMessage" style="color: red">
+                    <?= errorMessage ?>
+                </div>
+                <div class="statusMessage" style="color: green">
+                    <?= successMessage ?>
+                </div>
+                <div >
+
+                    <table>
+                        <tr>
+                            <th> Sr No.</th>
+                            <th> Slug </th>
+                            <th> Title</th>
+                            <th> Statement</th>
+
+                            <th> Actions</th>
+                        </tr>
+                        <? passages.forEach(function(passage, index) { ?>
+
+
+                        <tr>
+                            <td><?= (index + 1)?></td>
+                            <td><?= passage.slug?></td>
+                            <td><?= passage.title ?></td>
+                            <td><?- passage.statement?></td>
+                            <td>
+                                <a href="/admin/passages/<?= passage.slug ?>">show</a>
+                                <a href="/admin/passages/edit/<?= passage._id ?>">edit</a>
+                                <a href="javascript:void(0)" onClick="deletePassage('<?= passage._id ?>')">delete</a>
+                            </td>
+                        </tr>
+
+                        <? }); ?>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+
+
+    </div>
+    <!-- /.container -->
+
+    <? include ../../partials/footer ?>
+
+</body>
+<script>
+    function deletePassage(id){
+        var myForm = document.createElement("form");
+        myForm.action='/admin/passages/'+id+'?_method=DELETE';
+        myForm.method="POST";
+        myForm.submit();
+    }
+
+    $(document).ready(function(){
+        setTimeout(function(){
+            $(".statusMessage").hide("slow")
+        }, 5000)
+
+    })
+
+</script>
+
+<style>
+    table {
+        width: 100%;
+        border: 1px solid black;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 10px;
+    }
+</style>
+</html>

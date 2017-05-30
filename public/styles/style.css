@@ -1,0 +1,126 @@
+.small-font{
+    font-size: 0.875em
+}
+
+.comment-block {
+    padding-top: 10px;
+    padding-bottom: 10px; 
+}
+
+/*.navbar-inverse {
+	background-color: #fafafb;
+	border-color: lightgray
+}
+*/
+
+
+/*#262c38
+#517398
+#ff606e
+#00ddd8*/
+
+.navbar-inverse {
+    background-color: #00ddd8;
+    border-color: #00ddd8;
+}
+
+.navbar-inverse .navbar-nav>li>a {
+    color: #ffffff;
+}
+
+
+
+
+.navbar.navbar-inverse.navbar-fixed-top li > a:hover {
+    /*color: #517398;*/
+    background-color: #517398;
+}
+
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #ffffff;
+
+    font-weight: 900;
+    background-color: transparent;
+}
+
+
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover {
+    color: #ffffff;
+    background-color: transparent;
+}
+
+.navbar-inverse .navbar-brand{
+   color: #ffffff;
+   font-weight: 900;
+}
+
+
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
+    border-color: #00ddd8;
+}
+
+.navbar-inverse .navbar-toggle {
+    border-color: #00ddd8;
+}
+
+.navbar-inverse .navbar-toggle:hover,
+.navbar-inverse .navbar-toggle:focus {
+  background-color: #517398;
+}
+
+
+@media (max-width: 767px) {
+
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+        color: #ffffff;
+    }
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
+    .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+        color: #517398;
+        background-color: transparent;
+    }
+}
+
+
+
+.dropdown-menu > li > a {
+  color: #517398;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  color: #ffffff;
+  background-color: #517398;
+}
+
+
+.numberCircle {
+    border-radius: 35%;
+    behavior: url(PIE.htc);
+    padding: 5px;
+    background-color: #ff606e;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 900 !important;
+    font-style: italic !important;
+    font: 10px Arial, sans-serif;
+}
+
+
+
+body > .container{
+	min-height: 600px;
+}
+
+
+footer {
+    margin: 30px 0 0 0 !important;
+    padding: 10px;
+    background-color: black;
+    color: lightgray;
+
+}
+
+.footer-row{
+	margin: 0;
+}

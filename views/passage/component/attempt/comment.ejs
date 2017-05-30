@@ -1,0 +1,22 @@
+         <? attempt.comments.forEach(function(comment, index) { ?>
+         <div  class="attempt" id="comment<?=comment._id?>" data-id="<?=comment._id?>" data-date="<?- comment.updatedAt ?>">
+           <div class="row small-font" >
+            <div class="col-lg-1 small-font">
+              <img src="/images/ladder.png" class="img-circle" alt="Cinque Terre" width="20" height="20"> 
+            </div>
+
+            <div class="col-lg-11">
+              <!-- style="white-space: pre-wrap;" -->
+              <span ><?= comment.text ?></span> - <?= comment.user.email ?> <?=   moment(comment.updatedAt).format('MMM D, YYYY [at] h:mm:ss a');  ?> 
+              <? if (user && user._id.toString() == comment.user._id.toString()) { ?>
+              <a href=""> edit</a>
+              <?} ?>
+
+
+            </div>
+
+          </div>
+
+          <hr style="margin-top: 10px; margin-bottom: 10px;">
+        </div>
+        <? }); ?>
