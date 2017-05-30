@@ -3,8 +3,7 @@
 
 const async = require ('async');
 const moment = require('moment');
-const Passage = require ( './passage.model').model;
-const Attempt = require ( '../attempt/attempt.model').model;
+const Page = require ( './page.model').model;
 const Comment = require ( '../comment/comment.model').model;
 const config = require ( '../../config/environment');
 const Controller = {};
@@ -15,14 +14,14 @@ const Controller = {};
  */
  Controller.index = function (req, res) {
 
-    console.log("here in passage")
-    Passage.findActive(function(err, passages){
+    console.log("here in page")
+    Page.findActive(function(err, pages){
         if(err){
             res.status(500)
         }
         else{
-            res.render('passage/index', {
-                passages: passages
+            res.render('page/index', {
+                pages: pages
             });
 
         }
@@ -31,18 +30,18 @@ const Controller = {};
 
 
 Controller.getCreateView = function(req, res){
-    res.render('passage/admin/create')
+    res.render('page/admin/create')
 }
 
 
 Controller.getEditView = function(req, res){
-   Passage.findOne({_id: req.params.id}, function(err, passage){
+   Page.findOne({_id: req.params.id}, function(err, page){
     if(err){
         res.status(500).json(err);
     }
     else{
-        res.render('passage/admin/edit', {
-            passage: passage
+        res.render('page/admin/edit', {
+            page: page
         });
     }
 })
@@ -52,24 +51,24 @@ Controller.getEditView = function(req, res){
  * Creates a new user
  */
  Controller.create = function (req, res) {
-    Passage.create(req.body, function(err, result){
+    Page.create(req.body, function(err, result){
         if(err){
             res.status(500).json(err);
         }
         else{
-            res.redirect('/passages');
+            res.redirect('/pages');
         }
     })
 };
 
 
 Controller.update = function (req, res) {
-    Passage.findOneAndUpdate({_id: req.params.id}, req.body, function(err, result){
+    Page.findOneAndUpdate({_id: req.params.id}, req.body, function(err, result){
         if(err){
             res.status(500).json(err);
         }
         else{
-            res.redirect('/passages');
+            res.redirect('/pages');
         }
     })
 };
@@ -78,18 +77,18 @@ Controller.update = function (req, res) {
  * Get a single user
  */
  Controller.show = function (req, res) {
-    Passage.findOne({slug: req.params.slug}, function(err, passage){
+    Page.findOne({slug: req.params.slug}, function(err, page){
         if(err){
             res.status(500).json(err);
         }
         else{
-           Comment.find({passage: passage._id}, function(err, comments){
+           Comment.find({page: page._id}, function(err, comments){
             if(err){
                 callback(err);
             }
             else{
-              res.render('passage/show', {
-                passage: passage,
+              res.render('page/show', {
+                page: page,
                 comments: comments,
                 moment: moment
             })
@@ -108,8 +107,8 @@ Controller.update = function (req, res) {
 
 Controller.comments = function (req, res) {
     console.log(req.query)
-    console.log({passage: req.params.id, _id: { $gt: req.query.commentId }})
-    Comment.find({passage: req.params.id, _id: { $gt: req.query.commentId }}, function(err, comments){
+    console.log({page: req.params.id, _id: { $gt: req.query.commentId }})
+    Comment.find({page: req.params.id, _id: { $gt: req.query.commentId }}, function(err, comments){
         if(err){
             res.status(500).json(err);
         }
@@ -117,8 +116,8 @@ Controller.comments = function (req, res) {
             res.json(null);
         }
         else{
-            res.render('passage/component/passage/comment', {
-                // passage: {
+            res.render('page/component/page/comment', {
+                // page: {
                 //     _id: req.params.id,
                     comments: comments,
                 // },
@@ -133,7 +132,7 @@ Controller.comments = function (req, res) {
 }
 
 Controller.destroyComment = function (req, res) {
-    Passage.findOneAndUpdate({ _id: req.params.id}, { $pull: { comments: req.params.commentId }}, { 'new': true, validateBeforeSave: false}, function(err){
+    Page.findOneAndUpdate({ _id: req.params.id}, { $pull: { comments: req.params.commentId }}, { 'new': true, validateBeforeSave: false}, function(err){
         if(err){
             res.status(500).json(err);
         }
@@ -158,12 +157,12 @@ Controller.destroyComment = function (req, res) {
  * restriction: 'admin'
  */
  Controller.destroy = function (req, res) {
-    Passage.destroy(req.params.id, function(err){
+    Page.destroy(req.params.id, function(err){
         if(err){
             res.status(500).json(err);
         }
         else{
-            res.redirect("/passages")
+            res.redirect("/pages")
         }
     });
 

@@ -1,7 +1,7 @@
 'use strict';
 
 
-const Passage = require ( '../passage.model').model;
+const Page = require ( '../page.model').model;
 const config = require ( '../../../config/environment');
 const Controller = {};
 
@@ -11,13 +11,13 @@ const Controller = {};
  */
  Controller.index = function (req, res) {
 
-    Passage.findActive(function(err, passages){
+    Page.findActive(function(err, pages){
         if(err){
             res.status(500)
         }
         else{
-            res.render('passage/admin/index', {
-                passages: passages,
+            res.render('page/admin/index', {
+                pages: pages,
                 errorMessage: req.flash('createErrorMessage'),
                 successMessage: req.flash('createSuccessMessage')
             });
@@ -28,38 +28,38 @@ const Controller = {};
 
 
 Controller.getCreateView = function(req, res){
-    res.render('passage/admin/create')
+    res.render('page/admin/create')
 }
 
 
 Controller.getEditView = function(req, res){
-   Passage.findOne({_id: req.params.id}, function(err, passage){
+   Page.findOne({_id: req.params.id}, function(err, page){
     if(err){
         console.log(err)
     }
     else{
-        console.log(passage)
-        res.render('passage/admin/edit', {
-            passage: passage
+        console.log(page)
+        res.render('page/admin/edit', {
+            page: page
         });
     }
 })
 }
 
 /**
- * Create a new passage
+ * Create a new page
  */
  Controller.create = function (req, res) {
 
     req.body.user = req.user._id;
-    Passage.create(req.body, function(err, result){
+    Page.create(req.body, function(err, result){
         if(err){
-            req.flash("createErrorMessage", "Passage Create Error" + JSON.stringify(err));
-            res.redirect('/admin/passages');
+            req.flash("createErrorMessage", "page Create Error" + JSON.stringify(err));
+            res.redirect('/admin/pages');
         }
         else{
-            req.flash("createSuccessMessage", "Passage Created Successfully");
-            res.redirect('/admin/passages');
+            req.flash("createSuccessMessage", "page Created Successfully");
+            res.redirect('/admin/pages');
         }
     })
 };
@@ -67,12 +67,12 @@ Controller.getEditView = function(req, res){
 
 Controller.update = function (req, res) {
     req.body.user = req.user._id;
-    Passage.findOneAndUpdate({_id: req.params.id}, req.body, function(err, result){
+    Page.findOneAndUpdate({_id: req.params.id}, req.body, function(err, result){
         if(err){
             console.log(err);
         }
         else{
-            res.redirect('/admin/passages');
+            res.redirect('/admin/pages');
         }
     })
 };
@@ -81,14 +81,14 @@ Controller.update = function (req, res) {
  * Get a single user
  */
  Controller.show = function (req, res) {
-    Passage.findOne({slug: req.params.slug}, function(err, passage){
+    Page.findOne({slug: req.params.slug}, function(err, page){
         if(err){
             console.log(err)
         }
         else{
-            console.log(passage)
-            res.render('passage/admin/show', {
-                passage: passage
+            console.log(page)
+            res.render('page/admin/show', {
+                page: page
             })
         }
     })
@@ -102,12 +102,12 @@ Controller.update = function (req, res) {
  */
  Controller.destroy = function (req, res) {
     console.log("in destroy")
-    Passage.destroy(req.params.id, function(err){
+    Page.destroy(req.params.id, function(err){
         if(err){
             console.log(err)
         }
         else{
-            res.redirect("/admin/passages")
+            res.redirect("/admin/pages")
         }
     });
 

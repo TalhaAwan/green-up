@@ -17,7 +17,7 @@
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Passages
+                <h1 class="page-header">Pages
                 </h1>
 
             </div>
@@ -44,18 +44,18 @@
 
                             <th> Actions</th>
                         </tr>
-                        <? passages.forEach(function(passage, index) { ?>
+                        <? pages.forEach(function(page, index) { ?>
 
 
                         <tr>
                             <td><?= (index + 1)?></td>
-                            <td><?= passage.slug?></td>
-                            <td><?= passage.title ?></td>
-                            <td><?- passage.statement?></td>
+                            <td><?= page.slug?></td>
+                            <td><?= page.title ?></td>
+                            <td><?- page.statement?></td>
                             <td>
-                                <a href="/admin/passages/<?= passage.slug ?>">show</a>
-                                <a href="/admin/passages/edit/<?= passage._id ?>">edit</a>
-                                <a href="javascript:void(0)" onClick="deletePassage('<?= passage._id ?>')">delete</a>
+                                <a href="/admin/pages/<?= page.slug ?>">show</a>
+                                <a href="/admin/pages/edit/<?= page._id ?>">edit</a>
+                                <a href="javascript:void(0)" onClick="deletePage('<?= page._id ?>')">delete</a>
                             </td>
                         </tr>
 
@@ -75,9 +75,9 @@
 
 </body>
 <script>
-    function deletePassage(id){
+    function deletePage(id){
         var myForm = document.createElement("form");
-        myForm.action='/admin/passages/'+id+'?_method=DELETE';
+        myForm.action='/admin/pages/'+id+'?_method=DELETE';
         myForm.method="POST";
         myForm.submit();
     }

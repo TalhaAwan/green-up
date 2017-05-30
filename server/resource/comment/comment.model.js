@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 
 var CommentSchema = new Schema({
 	text: {type: String, required: true},
-	passage: {type: Schema.Types.ObjectId, ref: 'Passage'},
+	page: {type: Schema.Types.ObjectId, ref: 'Page'},
 	attempt: {type: Schema.Types.ObjectId, ref: 'Attempt'},
 	user: {type: Schema.Types.ObjectId, ref: 'User'},
 	guestUser: {

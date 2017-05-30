@@ -38,18 +38,18 @@
 //   //     return routerStub;
 //   //   }
 //   // },
-// //   './passage.controller': userCtrlStub
+// //   './page.controller': userCtrlStub
 // //   // '../../auth/auth.service': authServiceStub
 // // });
 
 
-// describe('Passage Router:', function() {
+// describe('Page Router:', function() {
 
 //   // it('should return an express router instance', function() {
 //   //   expect(userIndex).to.equal(routerStub);
 //   // });
 
-//   describe('GET /passages', function() {
+//   describe('GET /pages', function() {
 //    var app, indexStub, request, route;
 
 //    beforeEach(function () {
@@ -67,7 +67,7 @@
 //     // we stub this out so we can control the results returned by
 //     // the users module to ensure we execute all paths in our code
 //     route = proxyquire('./index.js', {
-//       // './passage.controller': {
+//       // './page.controller': {
 //       //   index: indexStub
 //       // },
 //       express: {
@@ -84,7 +84,7 @@
 //     // request = supertest(app);
 //   });
 
-//    it('should route to passage.controller.index', function(done) {
+//    it('should route to page.controller.index', function(done) {
 //     // console.log("should")
 
 //     require('./index').get('/')
@@ -93,7 +93,7 @@
 
 //     // indexStub.yield();
 //     //  request
-//     //  .get('/passages')
+//     //  .get('/pages')
 //     // expect(indexStub).to.have.been.calledOnce;
 //     // expect(indexStub).to.have.been.called;
 //     // indexStub.should.have.been.called;

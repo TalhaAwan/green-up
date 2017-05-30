@@ -5,7 +5,7 @@ const slug = require('slug');
 const sanitizeHtml = require('sanitize-html');
 const Schema = mongoose.Schema
 
-var PassageSchema = new Schema({
+var PageSchema = new Schema({
   title: {type: String, required: true},
   slug: {
     type: String,
@@ -22,13 +22,13 @@ var PassageSchema = new Schema({
 });
 
 
-PassageSchema
+PageSchema
 .pre('save', function(next){
   preSave(this);
   next();	
 });
 
-PassageSchema
+PageSchema
 .pre('findOneAndUpdate', function(next){
   this._update.title && this._update.statement? preSave(this._update) : null;
   next();    
@@ -37,27 +37,27 @@ PassageSchema
 
 
 
-PassageSchema.statics = {
+PageSchema.statics = {
   findActive: function(callback){
-    this.find({deleted: false}, function(err, passages){
+    this.find({deleted: false}, function(err, pages){
       if(err){
         callback(err);
       }
       else{
-       callback(null, passages)
+       callback(null, pages)
      }
    })
   },
 
   destroy: function(id, callback){
-    this.findOne({_id: id}, function(err, passage){
+    this.findOne({_id: id}, function(err, page){
       if(err){
         callback(err);
       }
       else{
-        passage.deleted = true;
-        passage.deletedAt = Date.now();
-        passage.save(function(err, result){
+        page.deleted = true;
+        page.deletedAt = Date.now();
+        page.save(function(err, result){
           if(err){
             callback(err);
           }
@@ -72,13 +72,13 @@ PassageSchema.statics = {
 
 
 
-var preSave = module.exports.preSave =  function (passage){
-  console.log("passage here")
-  console.log(passage)
-  passage.slug = slug(passage.title, {lower: true});
-  passage.statement = sanitizeHtml(passage.statement, {
+var preSave = module.exports.preSave =  function (page){
+  console.log("page here")
+  console.log(page)
+  page.slug = slug(page.title, {lower: true});
+  page.statement = sanitizeHtml(page.statement, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img' ])
   });
 }
 
-module.exports.model = mongoose.model('Passage', PassageSchema);
+module.exports.model = mongoose.model('Page', PageSchema);

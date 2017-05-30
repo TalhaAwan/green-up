@@ -15,7 +15,7 @@
 
     <main>
         <div class="jumbotron">
-            <h2>Passages</h2>
+            <h2>Pages</h2>
             
             <table>
                 <tr>
@@ -26,16 +26,16 @@
 
                     <th> Actions</th>
                 </tr>
-                <? passages.forEach(function(passage, index) { ?>
+                <? pages.forEach(function(page, index) { ?>
 
 
                 <tr>
                     <td><?= (index + 1)?></td>
-                    <td><?= passage.slug?></td>
-                    <td><?= passage.title ?></td>
-                    <td><?- passage.statement?></td>
+                    <td><?= page.slug?></td>
+                    <td><?= page.title ?></td>
+                    <td><?- page.statement?></td>
                     <td>
-                        <a href="/passages/<?= passage.slug ?>">show</a>
+                        <a href="/pages/<?= page.slug ?>">show</a>
                     </td>
                 </tr>
 
@@ -100,13 +100,13 @@
 
     <main>
         <div class="jumbotron">
-            <h2>Passage  (<?= passage.slug?>)</h2>
+            <h2>Page  (<?= page.slug?>)</h2>
 
             <div>
                 <h3>
                     Slug
                 </h3>
-                <span> <?= passage.slug ?></span> <br>
+                <span> <?= page.slug ?></span> <br>
             </div>
 
 
@@ -114,14 +114,14 @@
                 <h3>
                     Title
                 </h3>
-                <span> <?= passage.title ?></span> <br>
+                <span> <?= page.title ?></span> <br>
             </div>
 
             <div>
                 <h3>
                     Statement
                 </h3>
-                <span> <?- passage.statement ?></span> <br>
+                <span> <?- page.statement ?></span> <br>
             </div>
             <br>
 
@@ -178,7 +178,7 @@
 
                 <? if(!userAttempt){ ?>
                 <h2> Attempt </h2>
-                <form action="/passages/<?= passage.id ?>/attempts" method="POST">
+                <form action="/pages/<?= page.id ?>/attempts" method="POST">
 
                     <input type="text" name="translation"><br>
 
@@ -189,7 +189,7 @@
 
                 <br>
                 <h2> Comment </h2>
-                <form action="/passages/<?= passage.id ?>/comments" method="POST">
+                <form action="/pages/<?= page.id ?>/comments" method="POST">
 
                     <input type="text" name="text"><br>
 

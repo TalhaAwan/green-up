@@ -19,8 +19,8 @@
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Passage                 
-                    <small><?= passage.slug?></small>
+                <h1 class="page-header">Page                 
+                    <small><?= page.slug?></small>
                 </h1>
 
             </div>
@@ -34,7 +34,7 @@
                 <h3>
                     Slug
                 </h3>
-                <span> <?= passage.slug ?></span> <br>
+                <span> <?= page.slug ?></span> <br>
             </div>
 
 
@@ -42,19 +42,19 @@
                 <h3>
                     Title
                 </h3>
-                <span> <?= passage.title ?></span> <br>
+                <span> <?= page.title ?></span> <br>
             </div>
 
             <div>
                 <h3>
                     Statement
                 </h3>
-                <span> <?- passage.statement ?></span> <br>
+                <span> <?- page.statement ?></span> <br>
             </div>
             <br>
 
             <div>
-                <a href="/admin/passages/edit/<?= passage._id ?>">edit</a>
+                <a href="/admin/pages/edit/<?= page._id ?>">edit</a>
             </div>
         </div>
     </div>

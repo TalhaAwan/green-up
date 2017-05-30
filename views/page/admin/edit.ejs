@@ -26,8 +26,8 @@
 		<!-- Page Heading/Breadcrumbs -->
 		<div class="row">
 			<div class="col-lg-12">
-				<h1 class="page-header">Edit Passage
-					<small><a href="/admin/passages/<?= passage.slug ?>"><?= passage.slug?></a> </small>
+				<h1 class="page-header">Edit Page
+					<small><a href="/admin/pages/<?= page.slug ?>"><?= page.slug?></a> </small>
 				</h1>
 
 			</div>
@@ -37,14 +37,14 @@
 		<!-- Projects Row -->
 		<div class="row">
 			<div class="col-lg-12">
-				<div ng-app="tarjumaAdmin" ng-controller='tarjumaController' ng-init='init("<?= passage.statement ?>")'>
+				<div ng-app="tarjumaAdmin" ng-controller='tarjumaController' ng-init='init("<?= page.statement ?>")'>
 					
 
-					<form action="/admin/passages/<?= passage._id ?>?_method=PUT" method="POST" novalidate>
+					<form action="/admin/pages/<?= page._id ?>?_method=PUT" method="POST" novalidate>
 						<div class="control-group form-group">
 							<div class="controls">
 								<label>Title</label>
-								<input type="text" name="title"  value="<?= passage.title ?>" class="form-control" required data-validation-required-message="Please enter title.">
+								<input type="text" name="title"  value="<?= page.title ?>" class="form-control" required data-validation-required-message="Please enter title.">
 								<p class="help-block"></p>
 							</div>
 						</div>

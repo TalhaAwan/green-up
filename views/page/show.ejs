@@ -21,7 +21,7 @@
       <div class="row">
         <div class="col-lg-12">
           <h1 class="page-header">
-            <?= passage.title ?>
+            <?= page.title ?>
           </h1>
 
         </div>
@@ -34,7 +34,7 @@
           <div class="row ">
 
             <div  class="col-md-12">
-              <?- passage.statement ?>
+              <?- page.statement ?>
             </div>
           </div>
         </div>
@@ -44,19 +44,22 @@
       <div class="row">
         <hr>
         <div class="col-lg-12">
-         <div id="passage-comments<?=passage._id?>">
-           <? include ./component/passage/comment  ?>
+         <div id="page-comments<?=page._id?>">
+           <? include ./component/page/comment  ?>
          </div>
          <br>
 
-         <a href="javascript:" id="load-more-<?= passage.id ?>" style="font-size: 0.875em" onclick="loadMoreComments('passage', '<?=passage._id?>')">load more comments</a> <br><br>
+         <? if (comments && comments.length) {?>
+         <a href="javascript:" id="load-more-<?= page.id ?>" style="font-size: 0.875em" onclick="loadMoreComments('page', '<?=page._id?>')">load more comments</a> <br><br>
+         <? } ?>
 
-         <form id="passage-comment<?=passage._id?>" name="passage-comment" >
+         <form id="page-comment<?=page._id?>" name="page-comment" >
           <div class="form-group">
             <!-- <label>Add Comment</label> -->
+            <input type="email" name="email">
             <textarea class="form-control" rows="3" name="text"></textarea>
           </div>
-          <button  type="button" class="btn btn-primary" onclick="addComment('passage', '<?=passage._id?>')">Comment</button>
+          <button  type="button" class="btn btn-primary" onclick="addComment('page', '<?=page._id?>')">Comment</button>
         </form>
 
       </div>
@@ -126,7 +129,7 @@
     var data = {};
     $("#"+type+"-comment"+ id).serializeArray().map(function(x){data[x.name] = x.value;}); 
     $.ajax({
-     url: "/"+type+"s/"+ id +"/comments",
+     url: "/"+ id +"/comments",
      data: data,
      type: 'POST',
      success: function(data) {

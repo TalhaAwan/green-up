@@ -8,17 +8,15 @@ module.exports = function(app) {
   app.use('/auth', require('./auth'));
 
 
-
-  app.use('/attempts', require('./resource/attempt'));
-  app.use('/passages', require('./resource/passage'));
+  // app.use('/pages', require('./resource/page'));
   app.use('/users', require('./resource/user'));
-  app.use('/admin/passages', require('./resource/passage/admin'));
+  app.use('/admin/pages', require('./resource/page/admin'));
 
 
   app.get('/favicon.ico', function(req, res) {
   	res.status(404);
   });
-  app.use('/', require('./resource/passage'));
+  app.use('/', require('./resource/page'));
   
 
   // All undefined asset or api routes should return a 404

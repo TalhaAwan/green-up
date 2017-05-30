@@ -25,11 +25,11 @@ router.post('/', validator.body(validationSchema.localSignIn), function(req, res
         console.log("1")
         if(user.role == "admin"){
           console.log("2")
-          res.redirect('/admin/passages');
+          res.redirect('/admin/pages');
         }
         else{
           console.log("3")
-          res.redirect('/passages');
+          res.redirect('/pages');
         }
       }
     });

@@ -2,8 +2,7 @@
 
 const async = require('async');
 const moment = require('moment');
-const Passage = require ( '../passage/passage.model').model;
-const Attempt = require ( '../attempt/attempt.model').model;
+const Page = require ( '../page/page.model').model;
 const Comment = require ( './comment.model').model;
 const config = require ( '../../config/environment');
 const Controller = {};
@@ -19,7 +18,7 @@ const Controller = {};
             name: req.body.name,
             email: req.body.email
         },
-        passage: req.params.id
+        page: req.params.id
     };
 
 
@@ -28,8 +27,9 @@ const Controller = {};
             res.status(500).json(err);
         }
         else{
-            res.render('passage/component/passage/comment', {
-                // passage: {
+            console.log(comment)
+            res.render('page/component/page/comment', {
+                // page: {
                 //     _id: req.params.id,
                     comments: [comment],
                 // },

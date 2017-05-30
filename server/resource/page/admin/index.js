@@ -1,7 +1,7 @@
 'use strict';
 
 const Router = require('express').Router;
-const controller = require('./passage.controller');
+const controller = require('./page.controller');
 // const validationSchema = require('./user.validation.schema');
 // const validator = require('../../utils/request.validator.js');
 const auth = require('../../../auth/auth.service');
