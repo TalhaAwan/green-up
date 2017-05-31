@@ -11,17 +11,19 @@ const Controller = {};
  * Creates a new comment
  */
  Controller.create = function (req, res) {
-    console.log("In Create", req.body)
+    console.log(req.body)
     var comment = {
         text: req.body.text,
-        page: req.params.id
+        page: req.params.id,
+        guestUser: {
+            name: req.body.name
+        }
     };
 
-    req.body.name? comment["name"] = req.body.name : null;
-    req.body.email? comment["email"] = req.body.email : null;
+    !req.body.name? delete comment["guestUser"].name : null;
 
 
-
+    console.log(comment);
 
     Comment.create(comment, function(err, comment){
         if(err){

@@ -56,37 +56,30 @@
          <form id="page-comment<?=page._id?>" name="page-comment" >
            <div >
 
-           <div class="row form-group">
-           <div class="col-sm-6">
-              <input class="form-control" type="email" name="email" placeholder="Email">
-            </div>
-           </div>
 
-           <div class="row form-group">
+
+            <div class="row form-group">
               <div class="col-sm-6">
-              <input class="form-control" type="name" name="name" placeholder="Name">
+                <input class="form-control" type="name" name="name" placeholder="Name" required>
+              </div>
             </div>
-           </div>
 
-           <div class="row form-group">
-           <div class="col-sm-12">
-              <textarea class="form-control" rows="7" name="text" placeholder="Comment"></textarea>
+            <div class="row form-group">
+             <div class="col-sm-12">
+              <textarea class="form-control" id="text" rows="7" name="text" placeholder="Comment" required></textarea>
+
             </div>
-           </div>
-            
-         
-
-            
-
           </div>
-          <button  type="button" class="btn btn-primary" onclick="addComment('page', '<?=page._id?>')">Comment</button>
-        </form>
 
-      </div>
+        </div>
+        <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('page', '<?=page._id?>')" >Add</button>
+      </form>
+
     </div>
-
   </div>
-  <!-- /.container -->
+
+</div>
+<!-- /.container -->
 
 </div>
 </div>
@@ -99,7 +92,7 @@
 
   function loadMoreComments(type, id) { 
     console.log(type, id)
-    var query = "/"+type+"s/"+id+"/comments?";
+    var query = "/"+id+"/comments?";
     var commentId = $("#"+type+"-comments"+id+" ." +type).last().attr('data-id');
     commentId = "commentId=" + commentId;
     console.log(commentId);
@@ -148,20 +141,63 @@
   function addComment (type, id){
     var data = {};
     $("#"+type+"-comment"+ id).serializeArray().map(function(x){data[x.name] = x.value;}); 
-    $.ajax({
-     url: "/"+ id +"/comments",
-     data: data,
-     type: 'POST',
-     success: function(data) {
-      $( "#"+type+"-comments" + id ).append( data );
-      $("#"+type+"-comment"+ id + " textarea[name=text]").val('');
-    },
-
-    error: function(error){
-      console.log(error)
+    console.log(data);
+    console.log(!data.text)
+    if(!data.text){
+      $("#text").after("<div id='text-validation-error' style='color:red;'>Please enter comment</div>");
+      $( "#text" ).focus(function() {
+        $("#text-validation-error").remove();
+        $(this).off('focus');
+      });
     }
-  });
+    else{
+      $('#add-comment-btn').attr('disabled', 'disabled'); 
+      $.ajax({
+       url: "/"+ id +"/comments",
+       data: data,
+       type: 'POST',
+       success: function(data) {
+        $("#"+type+"-comments" + id ).append( data );
+        $("#"+type+"-comment"+ id + " textarea[name=text]").val('');
+        $('#add-comment-btn').removeAttr('disabled'); 
+      },
+
+      error: function(error){
+        console.log(error)
+      }
+    });
+    }
+
   }
+
+  $(document).ready(function(){
+
+    // $('form[name="page-comment"] input, form[name="page-comment"] textarea').each(
+    //   function(){  
+    //     var input = $(this);
+    //     var empty = false;
+    //     alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
+    //   }
+    //   );
+
+    // $('form[name="page-comment"] > input').keyup(function() {
+    //   console.log("here")
+    //   var empty = false;
+    //   $('form[name="page-comment"] > input').each(function() {
+    //     if ($(this).val() == '') {
+    //       empty = true;
+    //     }
+    //   });
+
+    //   if (empty) {
+    //     $('#add-comment-btn').attr('disabled', 'disabled'); 
+    //   } else {
+    //     $('#add-comment-btn').removeAttr('disabled'); 
+    //   }
+    // });
+  })
+
+
 
 
 

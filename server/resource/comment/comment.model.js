@@ -12,8 +12,7 @@ var CommentSchema = new Schema({
 	guestUser: {
 		name: {type: String, default: function(){
 			return "User_"+randomstring.generate(7);
-		}},
-		email: {type: String},
+		}}
 	},
 	createdAt: {type: Date, default: Date.now},
 	updatedAt: {type: Date, default: Date.now},
