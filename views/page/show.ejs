@@ -172,30 +172,50 @@
 
   $(document).ready(function(){
 
-    // $('form[name="page-comment"] input, form[name="page-comment"] textarea').each(
-    //   function(){  
-    //     var input = $(this);
-    //     var empty = false;
-    //     alert('Type: ' + input.attr('type') + 'Name: ' + input.attr('name') + 'Value: ' + input.val());
-    //   }
-    //   );
 
-    // $('form[name="page-comment"] > input').keyup(function() {
-    //   console.log("here")
-    //   var empty = false;
-    //   $('form[name="page-comment"] > input').each(function() {
-    //     if ($(this).val() == '') {
-    //       empty = true;
-    //     }
-    //   });
+   $.fn.setUrduInput = function (options) 
+   {
+    var m={"q":"ق","w":"و","e":"ع","r":"ر","t":"ت","y":"ے","u":"ء","i":"ی","o":"ہ","p":"پ","a":"ا","s":"س","d":"د","f":"ف","g":"گ","h":"ح","j":"ج","k":"ک","l":"ل","z":"ز","x":"ش","c":"چ","v":"ط","b":"ب","n":"ن","m":"م","`":"ً",",":"،",".":"۔","Q":"ْ","W":"ّ","E":"ٰ","R":"ڑ","T":"ٹ","Y":"َ","U":"ئ","I":"ِ","O":"ۃ","P":"ُ","A":"آ","S":"ص","D":"ڈ","G":"غ","H":"ھ","J":"ض","K":"خ","Z":"ذ","X":"ژ","C":"ث","V":"ظ","N":"ں","M":"٘","~":"ٍ","?":"؟","F":"ٔ","L":"ل","B":"ب"};
+    var last = '';
+    $(this).bind('input', function ()
+    {
+      var pos = document.querySelector("#text").selectionEnd;
+      var s = $(this).val();    
+      var isLastPos = (pos==s.length);
+      if (last==s) return;
+      var S = [];
+      for (var x = 0; x < s.length; x++)
+      {
+        var c = s.charAt(x);
+        S.push(m[c]||c);
+      }
+      $(this).val(S.join(''));
+      last = $(this).val();
+      if (!isLastPos) {
+        document.querySelector("#text").selectionStart = document.querySelector("#text").selectionEnd = pos;
+      }
 
-    //   if (empty) {
-    //     $('#add-comment-btn').attr('disabled', 'disabled'); 
-    //   } else {
-    //     $('#add-comment-btn').removeAttr('disabled'); 
-    //   }
-    // });
-  })
+      jQuery(this).css('direction', checkUrdu(jQuery(this).val().substr(0, 1)) ? 'rtl' : 'ltr');
+
+    });
+
+
+    function checkUrdu(firstChar) {
+
+      return !m[firstChar]? true: false ;
+    }
+
+
+  };
+
+  $('#text').setUrduInput();
+
+});
+
+
+
+  // })
+
 
 
 

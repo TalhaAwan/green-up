@@ -17,3 +17,8 @@
  // 		console.log(comment)
  // 	})
 
+
+
+// Comment.find({}, function(err, comment){
+// 	console.log(comment)
+// }).populate('page', 'slug -_id');
