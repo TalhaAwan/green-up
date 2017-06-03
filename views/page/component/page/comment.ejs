@@ -2,7 +2,6 @@
           <div  class="page" id="comment<?=comment._id?>" data-id="<?=comment._id?>" data-date="<?- comment.updatedAt ?>" style = "<?= comment.rtl? 'direction: rtl;' : '' ?>">
              <div class="row comment-block" >
 
-             
                <div class="col-lg-12">
                     <b><?= comment.guestUser.name ?></b><br>
                     <span class="small-font"><?=   moment(comment.updatedAt).format('MMM D, YYYY [at] h:mm:ss a');  ?> </span>
@@ -10,7 +9,7 @@
                     <br>
                </div>
 
-                 <div class="col-lg-12">
+                 <div class="col-lg-12 <?= comment.rtl? 'noto-nastaliq' : '' ?>">
                     <!-- style="white-space: pre-wrap;" -->
                     <span ><?- comment.text ?></span>
 
