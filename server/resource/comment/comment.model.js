@@ -7,8 +7,7 @@ const Schema = mongoose.Schema
 var CommentSchema = new Schema({
 	text: {type: String, required: true},
 	page: {type: Schema.Types.ObjectId, ref: 'Page'},
-	attempt: {type: Schema.Types.ObjectId, ref: 'Attempt'},
-	user: {type: Schema.Types.ObjectId, ref: 'User'},
+	rtl: {type: Boolean},
 	guestUser: {
 		name: {type: String, default: function(){
 			return "User_"+randomstring.generate(7);

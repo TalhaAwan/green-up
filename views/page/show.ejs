@@ -69,14 +69,22 @@
               <textarea class="form-control" id="text" rows="7" name="text" placeholder="Comment" required></textarea>
 
             </div>
+
+          </div>
+
+          <div class="row form-group">
+           <div class="col-sm-12">
+           <input  id="rtl" type="checkbox" name="rtl" value="true"> Allign right to left<br> 
           </div>
 
         </div>
-        <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('page', '<?=page._id?>')" >Add</button>
-      </form>
 
-    </div>
+      </div>
+      <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('page', '<?=page._id?>')" >Add</button>
+    </form>
+
   </div>
+</div>
 
 </div>
 <!-- /.container -->
@@ -151,6 +159,7 @@
       });
     }
     else{
+      data.rtl? data.rtl = JSON.parse(data.rtl): null;
       $('#add-comment-btn').attr('disabled', 'disabled'); 
       $.ajax({
        url: "/"+ id +"/comments",
@@ -168,50 +177,22 @@
     });
     }
 
-  }
-
-  $(document).ready(function(){
+  };
 
 
-   $.fn.setUrduInput = function (options) 
-   {
-    var m={"q":"ق","w":"و","e":"ع","r":"ر","t":"ت","y":"ے","u":"ء","i":"ی","o":"ہ","p":"پ","a":"ا","s":"س","d":"د","f":"ف","g":"گ","h":"ح","j":"ج","k":"ک","l":"ل","z":"ز","x":"ش","c":"چ","v":"ط","b":"ب","n":"ن","m":"م","`":"ً",",":"،",".":"۔","Q":"ْ","W":"ّ","E":"ٰ","R":"ڑ","T":"ٹ","Y":"َ","U":"ئ","I":"ِ","O":"ۃ","P":"ُ","A":"آ","S":"ص","D":"ڈ","G":"غ","H":"ھ","J":"ض","K":"خ","Z":"ذ","X":"ژ","C":"ث","V":"ظ","N":"ں","M":"٘","~":"ٍ","?":"؟","F":"ٔ","L":"ل","B":"ب"};
-    var last = '';
-    $(this).bind('input', function ()
-    {
-      var pos = document.querySelector("#text").selectionEnd;
-      var s = $(this).val();    
-      var isLastPos = (pos==s.length);
-      if (last==s) return;
-      var S = [];
-      for (var x = 0; x < s.length; x++)
-      {
-        var c = s.charAt(x);
-        S.push(m[c]||c);
-      }
-      $(this).val(S.join(''));
-      last = $(this).val();
-      if (!isLastPos) {
-        document.querySelector("#text").selectionStart = document.querySelector("#text").selectionEnd = pos;
-      }
-
-      jQuery(this).css('direction', checkUrdu(jQuery(this).val().substr(0, 1)) ? 'rtl' : 'ltr');
-
-    });
-
-
-    function checkUrdu(firstChar) {
-
-      return !m[firstChar]? true: false ;
+  function changeDirection(){
+  
     }
 
 
-  };
 
-  $('#text').setUrduInput();
-
-});
-
+    $('#rtl').change(function() {
+      console.log(this.checked)  
+      var direction; 
+        direction = this.checked? 'rtl' : 'ltr';
+        console.log(direction)
+        $("#text").css('direction',  direction);                
+    });
 
 
   // })

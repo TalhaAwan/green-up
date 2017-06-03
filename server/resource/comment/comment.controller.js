@@ -17,7 +17,8 @@ const Controller = {};
         page: req.params.id,
         guestUser: {
             name: req.body.name
-        }
+        },
+        rtl : req.body.rtl
     };
 
     !req.body.name? delete comment["guestUser"].name : null;
