@@ -95,7 +95,7 @@ Controller.update = function (req, res) {
           }
 
       })
-           .populate("user")
+
            .limit(10)
            .sort({ 'createdAt': 1 })
 
@@ -106,10 +106,9 @@ Controller.update = function (req, res) {
 
 
 Controller.comments = function (req, res) {
-    console.log(req.query)
-    console.log({page: req.params.id, _id: { $gt: req.query.commentId }})
     Comment.find({page: req.params.id, _id: { $gt: req.query.commentId }}, function(err, comments){
         if(err){
+            console.log(err)
             res.status(500).json(err);
         }
         else if(!comments || !comments.length){
@@ -126,7 +125,7 @@ Controller.comments = function (req, res) {
         }
     })
     .populate("user")
-    .limit(20)
+    .limit(10)
     .sort({ 'createdAt': 1 })
 
 }
