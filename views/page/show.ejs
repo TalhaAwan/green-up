@@ -80,7 +80,7 @@
          </div>
 
        </div>
-       <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('page', '<?=page._id?>')" >Add</button>
+       <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('<?=page._id?>')" >Add</button>
      </form>
 
    </div>
@@ -150,9 +150,9 @@
 
 
 
-  function addComment (type, id){
+  function addComment (id){
     var data = {};
-    $("#"+type+"-comment"+ id).serializeArray().map(function(x){data[x.name] = x.value;}); 
+    $("#page-comment"+ id).serializeArray().map(function(x){data[x.name] = x.value;}); 
     if(!data.text){
       $("#text").after("<div id='text-validation-error' style='color:red;'>Please enter comment</div>");
       $( "#text" ).focus(function() {
@@ -169,7 +169,7 @@
        type: 'POST',
        success: function(data) {
         $("#page-comments" ).append( data );
-        $("#"+type+"-comment"+ id + " textarea[name=text]").val('');
+        $("#page-comment"+ id + " textarea[name=text]").val('');
         $('#add-comment-btn').removeAttr('disabled'); 
       },
 
