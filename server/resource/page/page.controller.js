@@ -96,7 +96,7 @@ Controller.update = function (req, res) {
 
       })
 
-           .limit(10)
+           .limit(50)
            .sort({ 'createdAt': 1 })
 
 
@@ -125,7 +125,7 @@ Controller.comments = function (req, res) {
         }
     })
     .populate("user")
-    .limit(10)
+    .limit(20)
     .sort({ 'createdAt': 1 })
 
 }

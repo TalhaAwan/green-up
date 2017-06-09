@@ -9,7 +9,7 @@ Validator.body = function (schema){
         req.checkBody(schema);
         req.getValidationResult().then(function(result) {
             if (!result.isEmpty()) {
-                return res.status(400).json('Invalid body: ' + util.inspect(result.array()));
+                return res.status(400).json();
             }
             else{
                 return next();
@@ -28,7 +28,7 @@ Validator.params = function (schema){
         req.checkParams(schema);
         req.getValidationResult().then(function (result) {
             if (!result.isEmpty()) {
-                return res.status(400).json('Invalid params: ' + util.inspect(result.array()));
+                return res.status(400).json();
             }
             else {
                 return next();
@@ -46,7 +46,7 @@ Validator.query = function (schema){
         req.checkQuery(schema);
         req.getValidationResult().then(function (result) {
             if (!result.isEmpty()) {
-                return res.status(400).json('Invalid query params: ' + util.inspect(result.array()));
+                return res.status(400).json();
             }
             else {
                 return next();

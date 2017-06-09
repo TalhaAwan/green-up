@@ -11,7 +11,6 @@ const Controller = {};
  * Creates a new comment
  */
  Controller.create = function (req, res) {
-    console.log(req.body)
     var comment = {
         text: req.body.text,
         page: req.params.id,
@@ -20,27 +19,31 @@ const Controller = {};
         },
         rtl : req.body.rtl
     };
-
     !req.body.name? delete comment["guestUser"].name : null;
 
-
-    console.log(comment);
-
-    Comment.create(comment, function(err, comment){
+    Page.count({_id: req.params.id, deleted: false}, function(err, pageCount){
         if(err){
-            res.status(500).json(err);
+            res.status(500).json();
+        }
+        else if(!pageCount){
+            res.status(400).json();
         }
         else{
-            console.log(comment)
-            res.render('page/component/page/comment', {
-                // page: {
-                //     _id: req.params.id,
-                comments: [comment],
-                // },
-                moment: moment
-            })
+            Comment.create(comment, function(err, comment){
+                if(err){
+                    res.status(500).json();
+                }
+                else{
+                    console.log(comment)
+                    res.render('page/component/page/comment', {
+                        comments: [comment],
+                        moment: moment
+                    })
+                }
+            });
         }
     });
+
 
 
 
