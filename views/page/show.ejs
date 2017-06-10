@@ -54,33 +54,30 @@
          <? } ?>
 
          <form id="page-comment<?=page._id?>" name="page-comment" >
-           <div >
-
-
-
+           
             <div class="row form-group">
               <div class="col-sm-6">
-                <input class="form-control" type="name" name="name" placeholder="Name" required>
+                <input class="form-control" type="text" name="name" placeholder="Name" required>
               </div>
             </div>
-
+            <div class="row form-group ">
+              <div class="col-sm-6">
+                <input class="form-control" type="text" name="essential" placeholder="Essential">
+              </div>
+            </div>
             <div class="row form-group">
              <div class="col-sm-12">
               <textarea class="form-control" id="text" rows="7" name="text" placeholder="Comment" required></textarea>
-
             </div>
-
           </div>
-
           <div class="row form-group">
            <div class="col-sm-12">
              <input  id="rtl" type="checkbox" name="rtl" value="true"> Allign right to left<br> 
            </div>
-
          </div>
 
-       </div>
-       <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('<?=page._id?>')" >Add</button>
+       <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('<?=page._id?>')" >Add
+       </button>
      </form>
 
    </div>
@@ -178,20 +175,11 @@
       }
     });
     }
-
   };
-
 
   $('#rtl').change(function() {
     $("#text").css('direction',  this.checked? 'rtl' : 'ltr');                
   });
-
-
-
-
-
-
-
 
 
 </script>

@@ -19,4 +19,11 @@ var CommentSchema = new Schema({
 	deletedAt: {type: Date}
 });
 
+CommentSchema.statics = {
+	getPloy: function(comment){
+		comment["guestUser"].name = comment["guestUser"].name? comment["guestUser"].name : "User_"+randomstring.generate(7);
+		return new this(comment);
+	}
+}
+
 module.exports.model = mongoose.model('Comment', CommentSchema);
