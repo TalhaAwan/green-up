@@ -81,7 +81,10 @@ module.exports = function(app) {
     }
 
 
-    if(env === 'development' || env === 'test') {
-        app.use(errorHandler()); // Error handler - has to be last
-    }
+    // if(env === 'development' || env === 'test') {
+    //     app.use(errorHandler()); // Error handler - has to be last
+    // }
+    // 
+    
+
 }

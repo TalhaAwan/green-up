@@ -76,10 +76,17 @@ Controller.update = function (req, res) {
 /**
  * Get a single user
  */
- Controller.show = function (req, res) {
+ Controller.show = function (req, res, next) {
     Page.findOne({slug: req.params.slug}, function(err, page){
         if(err){
-            res.status(500).json(err);
+            var err = new Error('Something Went Wrong');
+            err.status = 500;
+            next(err);
+        }
+        else if(!page){
+            var err = new Error('Page Not Found');
+            err.status = 404;
+            next(err);
         }
         else{
            Comment.find({page: page._id}, function(err, comments){
@@ -118,7 +125,7 @@ Controller.comments = function (req, res) {
             res.render('page/component/page/comment', {
                 // page: {
                 //     _id: req.params.id,
-                    comments: comments,
+                comments: comments,
                 // },
                 moment: moment
             })
