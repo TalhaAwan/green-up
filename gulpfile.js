@@ -10,11 +10,11 @@ var gulp   = require('gulp'),
 
 gulp.task('default', [
     'watch',
-    'build-src-css',
-    'build-vendor-css',
-    'build-src-js',
-    'build-vendor-js',
-    'jshint'
+    // 'build-src-css',
+    'build-css',
+    // 'build-src-js',
+    'build-js',
+    // 'jshint'
 ]);
 
 
@@ -38,13 +38,16 @@ gulp.task('build-src-css', function() {
         .pipe(gulp.dest('dist/stylesheets'));
 });
 
-gulp.task('build-vendor-css', function() {
+gulp.task('build-css', function() {
     return gulp.src([
-        'client/libs/bootstrap/dist/css/bootstrap.min.css',
-        'client/libs/angular-material/angular-material.min.css',
+        "public/libs/bootstrap/dist/css/bootstrap.min.css",
+        "public/template/css/modern-business.css",
+        "public/styles/style.css",
+        // "public/libs/font-awesome/css/font-awesome.css"
     ])
-        .pipe(concat('vendor.min.css'))
-        .pipe(gulp.dest('dist/stylesheets'));
+        .pipe(concat('app.min.css'))
+        .pipe(cleanCSS())
+        .pipe(gulp.dest('public/dist'));
 });
 
 
@@ -59,17 +62,15 @@ gulp.task('build-src-js', function() {
 });
 
 
-gulp.task('build-vendor-js', function() {
+gulp.task('build-js', function() {
     return gulp.src([
-        "client/libs/jquery/dist/jquery.min.js",
-        "client/libs/angular/angular.min.js",
-        "client/libs/angular-route/angular-route.min.js",
-        "client/libs/angular-animate/angular-animate.min.js",
-        "client/libs/angular-aria/angular-aria.min.js",
-        "client/libs/angular-material/angular-material.min.js"
+        "public/libs/jquery/dist/jquery.min.js",
+        "public/libs/bootstrap/dist/js/bootstrap.min.js",
+        "views/**/*.js"
     ])
-        .pipe(concat('vendor.min.js'))
-        .pipe(gulp.dest('dist/javascript'));
+        .pipe(concat('app.min.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('public/dist'));
 });
 
 
@@ -81,6 +82,6 @@ gulp.task('jshint', function() {
 
 
 gulp.task('watch', function() {
-    gulp.watch('client/app/**/*.js', ['jshint', 'build-src-js']);
-    gulp.watch('client/scss/**/*.scss', ['build-src-css']);
+    gulp.watch('public/javascript/**/*.js', [ 'build-js']);
+    gulp.watch('public/styles/**/*.css', ['build-css']);
 });
