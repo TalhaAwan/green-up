@@ -2,8 +2,15 @@ html, body{
     font-size: 16px;
     line-height: 1.5;
 }
-.small-font{
-    font-size: 0.875em
+
+.commenter-name{
+    font-size: 0.9em;
+    font-weight: 700;
+}
+
+.commenter-date{
+    font-size: 0.8em;
+    color: #757575;
 }
 
 .comment-block {
@@ -132,6 +139,14 @@ footer {
 .essential{
     display: none;
 }
+
+.page-header{
+    border-bottom: 1px solid #BDBDBD ;
+}
+
+/*#page-comments {
+    border-top: 1px solid #BDBDBD;
+}*/
 
 .noto-nastaliq{
     font-family: 'Noto Nastaliq Urdu', serif;

@@ -42,39 +42,42 @@
       <!-- /.row -->
 
       <div class="row">
-        <hr>
         <div class="col-lg-12">
+
          <div id="page-comments">
-           <? include ./component/page/comment  ?>
-         </div>
-         <br>
+           <div class="page-header">
+            <i>Comments</i>
+          </div>
+          <? include ./component/page/comment  ?>
+        </div>
+        <br>
 
-         <? if (comments && comments.length) {?>
-         <a href="javascript:" id="load-more-<?= page.id ?>" style="font-size: 0.875em" onclick="loadMoreComments('<?=page._id?>')">load more comments</a> <br><br>
-         <? } ?>
+        <? if (comments && comments.length) {?>
+        <a href="javascript:" id="load-more-<?= page.id ?>" style="font-size: 0.875em" onclick="loadMoreComments('<?=page._id?>')">load more comments</a> <br><br>
+        <? } ?>
 
-         <form id="page-comment<?=page._id?>" name="page-comment" >
-           
-            <div class="row form-group">
-              <div class="col-sm-6">
-                <input class="form-control" type="text" name="name" placeholder="Name" required>
-              </div>
+        <form id="page-comment<?=page._id?>" name="page-comment" >
+
+          <div class="row form-group">
+            <div class="col-sm-6">
+              <input class="form-control" type="text" name="name" placeholder="Name" required>
             </div>
-            <div class="row form-group ">
-              <div class="col-sm-6">
-                <input class="form-control" type="text" name="essential" placeholder="Essential">
-              </div>
-            </div>
-            <div class="row form-group">
-             <div class="col-sm-12">
-              <textarea class="form-control" id="text" rows="7" name="text" placeholder="Comment" required></textarea>
+          </div>
+          <div class="row form-group ">
+            <div class="col-sm-6">
+              <input class="form-control" type="text" name="essential" placeholder="Essential">
             </div>
           </div>
           <div class="row form-group">
            <div class="col-sm-12">
-             <input  id="rtl" type="checkbox" name="rtl" value="true"> Allign right to left<br> 
-           </div>
+            <textarea class="form-control" id="text" rows="7" name="text" placeholder="Comment" required></textarea>
+          </div>
+        </div>
+        <div class="row form-group">
+         <div class="col-sm-12">
+           <input  id="rtl" type="checkbox" name="rtl" value="true"> Allign right to left<br> 
          </div>
+       </div>
 
        <button  id="add-comment-btn" type="button" class="btn btn-primary" onclick="addComment('<?=page._id?>')" >Add
        </button>
