@@ -82,6 +82,6 @@ gulp.task('jshint', function() {
 
 
 gulp.task('watch', function() {
-    gulp.watch('public/javascript/**/*.js', [ 'build-js']);
+    gulp.watch('views/**/*.js', [ 'build-js']);
     gulp.watch('public/styles/**/*.css', ['build-css']);
 });
