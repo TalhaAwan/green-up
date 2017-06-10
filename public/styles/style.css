@@ -24,8 +24,8 @@ html, body{
 #00ddd8*/
 
 .navbar-inverse {
-    background-color: #00ddd8;
-    border-color: #00ddd8;
+    background-color: #03A9F4;
+    border-color: #03A9F4;
 }
 
 .navbar-inverse .navbar-nav>li>a {
@@ -37,7 +37,7 @@ html, body{
 
 .navbar.navbar-inverse.navbar-fixed-top li > a:hover {
     /*color: #517398;*/
-    background-color: #517398;
+    background-color: #0288D1;
 }
 
 
@@ -61,16 +61,16 @@ html, body{
 
 
 .navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form{
-    border-color: #00ddd8;
+    border-color: #0288D1;
 }
 
 .navbar-inverse .navbar-toggle {
-    border-color: #00ddd8;
+    border-color: #0288D1;
 }
 
 .navbar-inverse .navbar-toggle:hover,
 .navbar-inverse .navbar-toggle:focus {
-  background-color: #517398;
+  background-color: #0288D1;
 }
 
 
@@ -81,7 +81,7 @@ html, body{
     }
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover,
     .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
-        color: #517398;
+        color: #0288D1;
         background-color: transparent;
     }
 }
@@ -89,12 +89,12 @@ html, body{
 
 
 .dropdown-menu > li > a {
-  color: #517398;
+  color: #0288D1;
 }
 .dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
   color: #ffffff;
-  background-color: #517398;
+  background-color: #0288D1;
 }
 
 
@@ -120,8 +120,8 @@ body > .container{
 footer {
     margin: 30px 0 0 0 !important;
     padding: 10px;
-    background-color: black;
-    color: lightgray;
+    background-color: #212121;
+    color: #FFFFFF;
 
 }
 
