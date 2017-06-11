@@ -3,21 +3,19 @@ html, body{
     line-height: 1.5;
 }
 
+a {
+    color: #0288D1;
+}
+
+a:hover {
+    color: #03A9F4;
+}
+
+
 .commenter-name{
     font-size: 0.9em;
     font-weight: 700;
 }
-
-.small-blue-font{
-    font-size: 0.8em;
-    color: #0288D1;
-}
-
-.small-gray-font{
-    font-size: 0.8em;
-    color: #757575;
-}
-
 
 .commenter-date{
     font-size: 0.8em;
@@ -28,6 +26,31 @@ html, body{
     padding-top: 10px;
     padding-bottom: 10px; 
 }
+
+
+.small-font{
+    font-size: 0.8em;
+}
+
+.small-gray-font{
+    font-size: 0.8em;
+    color: #757575;
+}
+
+
+.related-container {
+    margin-top: 80px;
+}
+
+
+.related-block{
+    font-size: 0.8125em;
+}
+
+.related-block > div {
+    margin: 10px 0 10px 0;
+}
+
 
 
 .primary-button{

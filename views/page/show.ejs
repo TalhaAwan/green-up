@@ -14,7 +14,7 @@
  <!-- Page Content -->
  <div class="container">
    <div  class="row">
-     <div class="col-md-3">
+     <div class="col-md-1">
      </div>
      <div class="col-md-6">
       <!-- Page Heading -->
@@ -53,7 +53,7 @@
         <br>
 
         <? if (comments && comments.length) {?>
-        <a href="javascript:" id="load-more-<?= page.id ?>" class="small-blue-font"  onclick="loadMoreComments('<?=page._id?>')">load more comments</a> <br><br>
+        <a href="javascript:" id="load-more-<?= page.id ?>" class="small-font"  onclick="loadMoreComments('<?=page._id?>')">load more comments</a> <br><br>
         <? } ?>
 
         <form id="page-comment<?=page._id?>" name="page-comment" >
@@ -86,6 +86,35 @@
    </div>
  </div>
 
+</div>
+
+<div class="col-md-1">
+</div>
+
+<div class="col-md-4">
+  <div class="row related-container">
+    <div class="col-lg-12">
+      <h4>
+        Related
+      </h4>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-lg-12 related-block">
+    <div>
+      <a href="https://stackoverflow.com/questions/6382023/changing-the-color-of-an-hr-element">Changing the color of an hr element</a>
+    </div>
+    <div>
+      <a href="https://stackoverflow.com/questions/6382023/changing-the-color-of-an-hr-element">Changing the color of an hr element Changing the color of an hr element Changing the color of an hr element</a>
+    </div>
+
+    <div>
+      <a href="https://stackoverflow.com/questions/44465182/how-do-i-avoid-needing-to-use-parsefloat-int-number-in-the-first-place-with-j/44466507#44466507">How do I avoid needing to use parseFloat/Int, number() in the first place with JavaScript?</a>
+    </div>
+
+    </div>
+  </div>
 </div>
 <!-- /.container -->
 
