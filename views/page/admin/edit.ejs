@@ -37,10 +37,10 @@
 		<!-- Projects Row -->
 		<div class="row">
 			<div class="col-lg-12">
-				<div ng-app="tarjumaAdmin" ng-controller='tarjumaController' ng-init="init('<?= page.statement ?>')">
+				<div >
 					
 
-					<form action="/admin/pages/<?= page._id ?>?_method=PUT" method="POST" novalidate>
+					<form id="page-form" action="/admin/pages/<?= page._id ?>?_method=PUT" method="POST" novalidate>
 						<div class="control-group form-group">
 							<div class="controls">
 								<label>Title</label>
@@ -48,12 +48,25 @@
 								<p class="help-block"></p>
 							</div>
 						</div>
-						<div class="control-group form-group">
+<!-- 						<div class="control-group form-group">
 							<div class="controls">
 								<label> Statement </label>
 								<text-angular ng-model="statement" name="statement"></text-angular>
 							</div>
 						</div>
+ -->
+
+						<div class="control-group form-group">
+							<div class="controls">
+							  <div id="tempElem"><?- page.statement ?></div>
+							  <div id="summernote"></div>
+							  <textarea class="hidden" id="statement" name="statement" rows="4" cols="50"></textarea>
+							</div>
+						</div>
+
+
+
+
 						<button type="submit" class="btn btn-primary">Update</button>
 
 					</form>
@@ -73,16 +86,28 @@
 
 </body>
 <script>
-	(function() {
-		angular.module('tarjumaAdmin', ['textAngular']).controller('tarjumaController', ['$scope', function ($scope) {
-			console.log("tarjumaAdmin");
-			$scope.init = function(statement){
-				console.log(statement)
-				$scope.statement = statement;
-			}
+ 
 
-		}]);
-	})();
+
+$(document).ready(function() {
+
+  $('#summernote').summernote({
+  	  height: 300,                 // set editor height
+      minHeight: null,             // set minimum height of editor
+      maxHeight: null,             // set maximum height of editor
+      focus: true,
+  });
+  $('#summernote').summernote('code', $("#tempElem").html());
+  $("#tempElem").remove();
+
+
+
+  $('#page-form').submit(function() {
+  	$("#statement").html($('#summernote').summernote('code'))
+  });
+
+});
+
 </script>
 
 

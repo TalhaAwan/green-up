@@ -67,6 +67,7 @@ Controller.getEditView = function(req, res){
 
 Controller.update = function (req, res) {
     req.body.user = req.user._id;
+    console.log(req.body)
     Page.findOneAndUpdate({_id: req.params.id}, req.body, function(err, result){
         if(err){
             console.log(err);

@@ -63,6 +63,7 @@ Controller.getEditView = function(req, res){
 
 
 Controller.update = function (req, res) {
+
     Page.findOneAndUpdate({_id: req.params.id}, req.body, function(err, result){
         if(err){
             res.status(500).json(err);
