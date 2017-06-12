@@ -79,7 +79,7 @@ var preSave = module.exports.preSave =  function (page){
   page.statement = sanitizeHtml(page.statement, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img', 'iframe' ]),
     allowedAttributes: {
-      iframe : ['width', 'height', 'src', 'frameborder', 'allowfullscreen']
+      iframe : ['width', 'height', 'src', 'frameborder', 'allowfullscreen', 'style']
     }
   });
 }
