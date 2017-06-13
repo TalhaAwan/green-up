@@ -188,7 +188,18 @@ footer {
 }
 
 .page-header{
-    border-bottom: 1px solid #BDBDBD ;
+    border-bottom: 1px solid #BDBDBD;
+    margin: 40px 0 15px;
+}
+
+
+#page-comments{
+    font-size: 0.97em;
+    line-height: 1.7;
+}
+
+.commenter-info{
+    margin-bottom: 15px;
 }
 
 .h1-custom{
