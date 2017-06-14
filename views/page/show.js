@@ -4,7 +4,15 @@ var commentId;
 $(document).ready(function(){
   commentId = $("#page-comments .page").last().attr('data-id');
   $('#rtl').change(function() {
-    $("#text").css('direction',  this.checked? 'rtl' : 'ltr');                
+    if(this.checked){
+      $("#text").css('direction', 'rtl');
+      $("#text").addClass('noto-nastaliq');
+    }
+    else{
+      $("#text").css('direction', 'ltr');
+      $("#text").removeClass('noto-nastaliq');
+    }
+
   });
 })
 
