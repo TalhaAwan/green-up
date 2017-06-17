@@ -6,10 +6,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="<?= (typeof page !== 'undefined')? page.metaDescription : '' ?>">
     <meta name="author" content="">
 
-    <title>Tarjuma</title>
+    <title><?= (typeof page !== 'undefined')? page.title + ' | ' : '' ?> greenUp</title>
 
     <!-- Bootstrap Core CSS -->
     <!-- <link href="/template/css/bootstrap.min.css" rel="stylesheet"> -->
