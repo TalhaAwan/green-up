@@ -80,18 +80,18 @@ Controller.update = function (req, res) {
  Controller.show = function (req, res, next) {
     Page.findOne({slug: req.params.slug}, function(err, page){
         if(err){
-            var err = new Error('Something Went Wrong');
+            var err = new Error('Oops! Something Went Wrong');
             err.status = 500;
             next(err);
         }
         else if(!page){
-            var err = new Error('Page Not Found');
+            var err = new Error('Oops! The Page Cannot Be Found');
             err.status = 404;
             next(err);
         }
         else{
            Comment.find({page: page._id}, function(err, comments){
-            if(err){
+            if(err){e
                 callback(err);
             }
             else{
