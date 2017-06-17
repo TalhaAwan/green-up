@@ -7,14 +7,15 @@ const Schema = mongoose.Schema
 
 var PageSchema = new Schema({
   title: {type: String, required: true},
+  heading: {type: String, required: true},
+  metaDescription: {type: String, required: true},
   slug: {
     type: String,
     lowercase: true,
     index: {unique: true}
   },
   user: {type: Schema.Types.ObjectId, ref: 'User', required: true},
-  comments: [{type: Schema.Types.ObjectId, ref: 'Comment'}],
-  statement: {type: String, required: true},
+  content: {type: String, required: true},
   createdAt: {type: Date, default: Date.now},
   updatedAt: {type: Date, default: Date.now},
   deleted: {type: Boolean, default: false},
@@ -30,7 +31,7 @@ PageSchema
 
 PageSchema
 .pre('findOneAndUpdate', function(next){
-  this._update.title && this._update.statement? preSave(this._update) : null;
+  this._update.content? preSave(this._update) : null;
   next();    
 });
 
@@ -75,8 +76,8 @@ PageSchema.statics = {
 var preSave = module.exports.preSave =  function (page){
   console.log("page here")
   console.log(page)
-  page.slug = slug(page.title, {lower: true});
-  page.statement = sanitizeHtml(page.statement, {
+  // page.slug = slug(page.title, {lower: true});
+  page.content = sanitizeHtml(page.content, {
     allowedTags: sanitizeHtml.defaults.allowedTags.concat([ 'img', 'iframe' ]),
     allowedAttributes: {
       img: ['src', 'alt', 'width', 'height', 'style'],

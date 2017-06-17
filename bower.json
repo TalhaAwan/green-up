@@ -10,7 +10,8 @@
     "angular-aria": "1.5.9",
     "jquery": "2.2.4",
     "textAngular": "^1.5.16",
-    "components-font-awesome": "^4.7.0"
+    "components-font-awesome": "^4.7.0",
+    "slug": "^0.9.1"
   },
   "resolutions": {
     "angular": "1.5.7"

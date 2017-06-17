@@ -50,7 +50,7 @@ Controller.getEditView = function(req, res){
  * Create a new page
  */
  Controller.create = function (req, res) {
-
+    console.log(req.body);
     req.body.user = req.user._id;
     Page.create(req.body, function(err, result){
         if(err){

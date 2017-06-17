@@ -30,24 +30,47 @@
 					<form id="page-form" action="/admin/pages/<?= page._id ?>?_method=PUT" method="POST" novalidate>
 						<div class="control-group form-group">
 							<div class="controls">
-								<label>Title</label>
-								<input type="text" name="title"  value="<?= page.title ?>" class="form-control" required data-validation-required-message="Please enter title.">
+								<label>Heading</label>
+								<input id="heading" type="text" name="heading"  value="<?= page.heading ?>" class="form-control" required data-validation-required-message="Please enter heading.">
 								<p class="help-block"></p>
 							</div>
 						</div>
 
 						<div class="control-group form-group">
 							<div class="controls">
-							  <div id="tempElem"><?- page.statement ?></div>
-							  <div id="summernote"></div>
-							  <textarea class="hidden" id="statement" name="statement" rows="4" cols="50"></textarea>
+								<label>Title</label>
+								<input id="title" type="text" name="title"  value="<?= page.title ?>" class="form-control" required data-validation-required-message="Please enter title.">
+								<p class="help-block"></p>
+							</div>
+						</div>
+
+						<div class="control-group form-group">
+							<div class="controls">
+								<label>URL</label>
+								<input id="slug" type="text" name="slug"  value="<?= page.slug ?>" class="form-control" required data-validation-required-message="Please enter url.">
+								<p class="help-block"></p>
+							</div>
+						</div>
+
+						<div class="control-group form-group">
+							<div class="controls">
+								<label>Meta Description</label>
+								<input id="metaDescription" type="text" name="metaDescription"  value="<?= page.metaDescription ?>" class="form-control" required data-validation-required-message="Please enter meta description.">
+								<p class="help-block"></p>
+							</div>
+						</div>
+
+						<div class="control-group form-group">
+							<div class="controls">
+								<div id="tempElem"><?- page.content ?></div>
+								<div id="summernote"></div>
+								<textarea class="hidden" id="content" name="content" rows="4" cols="50"></textarea>
 							</div>
 						</div>
 
 
-
-
-						<button type="submit" class="btn btn-primary">Update</button>
+						<span id="error-message" class="hidden" style="color:red"> Fill in all the fields </span><br>
+						<button id="update" type="submit" class="btn btn-primary">Update</button>
 
 					</form>
 
@@ -66,27 +89,56 @@
 
 </body>
 <script>
- 
-
-
-$(document).ready(function() {
-
-  $('#summernote').summernote({
-  	  height: 300,                 
-      minHeight: null,             
-      maxHeight: null,             
-      focus: true,
-  });
-  $('#summernote').summernote('code', $("#tempElem").html());
-  $("#tempElem").remove();
 
 
 
-  $('#page-form').submit(function() {
-  	$("#statement").html($('#summernote').summernote('code'))
-  });
+	$(document).ready(function() {
 
-});
+		$('#summernote').summernote({
+			height: 300,                 
+			minHeight: null,             
+			maxHeight: null,             
+			focus: true,
+		});
+		$('#summernote').summernote('code', $("#tempElem").html());
+		$("#tempElem").remove();
+
+		var formFieldIds = ["#heading", "#title", "#slug", "#metaDescription", "#statement"];
+		$('#page-form').submit(function(e) {
+			$("#content").html($('#summernote').summernote('code'));
+			if(!isFilled() || $("#content").text().length < 12) {
+				$('#error-message').removeClass("hidden");
+				setTimeout(function(){
+					$('#error-message').addClass("hidden");
+				}, 3000)
+				e.preventDefault();
+			}
+			else{
+				$('#error-message').addClass("hidden");
+			}
+
+		});
+
+
+		$("#heading").change(function(){
+			var heading = $(this).val();
+			$("#title").val(heading);
+			$("#slug").val(slug(heading, {lower: true}));
+		});
+
+
+		function isFilled(){
+			var filled = true;
+			for(var i = 0; i < formFieldIds.length; i++){
+				if($(formFieldIds[i]).val() == ''){
+					filled = false;
+					break;
+				}
+			}
+			return filled;
+		}
+
+	});
 
 </script>
 
