@@ -27,7 +27,7 @@
 				<div >
 					
 
-					<form id="page-form" action="/admin/pages/<?= page._id ?>?_method=PUT" method="POST" novalidate>
+					<form id="page-form" novalidate>
 						<div class="control-group form-group">
 							<div class="controls">
 								<label>Heading</label>
@@ -64,13 +64,15 @@
 							<div class="controls">
 								<div id="tempElem"><?- page.content ?></div>
 								<div id="summernote"></div>
+								<input id="page-id" class="hidden" value="<?= page._id ?>">
 								<textarea class="hidden" id="content" name="content" rows="4" cols="50"></textarea>
 							</div>
 						</div>
 
 
-						<span id="error-message" class="hidden" style="color:red"> Fill in all the fields </span><br>
-						<button id="update" type="submit" class="btn btn-primary">Update</button>
+						<span id="error-message" style="color:red"> </span><br>
+						<span id="success-message" style="color:green"> </span><br><br>
+						<button id="update-page" type="button" class="btn btn-primary">Update</button>
 
 					</form>
 
@@ -103,21 +105,7 @@
 		$('#summernote').summernote('code', $("#tempElem").html());
 		$("#tempElem").remove();
 
-		var formFieldIds = ["#heading", "#title", "#slug", "#metaDescription", "#statement"];
-		$('#page-form').submit(function(e) {
-			$("#content").html($('#summernote').summernote('code'));
-			if(!isFilled() || $("#content").text().length < 12) {
-				$('#error-message').removeClass("hidden");
-				setTimeout(function(){
-					$('#error-message').addClass("hidden");
-				}, 3000)
-				e.preventDefault();
-			}
-			else{
-				$('#error-message').addClass("hidden");
-			}
 
-		});
 
 
 		$("#heading").change(function(){
@@ -127,16 +115,51 @@
 		});
 
 
-		function isFilled(){
+		function isFilled(data){
+			if(data.content.length < 20) return false;
 			var filled = true;
-			for(var i = 0; i < formFieldIds.length; i++){
-				if($(formFieldIds[i]).val() == ''){
+			for(var key in data){
+				if(!data[key]){
 					filled = false;
 					break;
 				}
 			}
 			return filled;
 		}
+
+		$("#update-page").click(function(){
+			$("#content").html($('#summernote').summernote('code'));
+			var data = {};
+			var id = $("#page-id").val();
+			$("#page-form").serializeArray().map(function(x){data[x.name] = x.value;}); 
+			if(isFilled(data)){
+				$(this).attr('disabled', 'disabled'); 
+				$.ajax({
+					url: "/admin/pages/"+id,
+					data: data,
+					dataType: 'json',
+					type: 'PUT',
+					success: function(data) {
+						$('#success-message').text(data.message);
+						setTimeout(function(){
+							window.location.replace("/admin/pages/"+data.slug);
+						}, 2000)
+					},
+					error: function(error){
+						$('#error-message').text(JSON.stringify(error));
+						setTimeout(function(){
+							$('#error-message').text("");
+						}, 50000)
+					}
+				});
+			}
+			else{
+				$('#error-message').text("Fill in all fields");
+				setTimeout(function(){
+					$('#error-message').text("");
+				}, 3000)
+			}
+		});
 
 	});
 

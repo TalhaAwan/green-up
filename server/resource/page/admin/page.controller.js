@@ -33,7 +33,7 @@ Controller.getCreateView = function(req, res){
 
 
 Controller.getEditView = function(req, res){
-   Page.findOne({_id: req.params.id}, function(err, page){
+ Page.findOne({_id: req.params.id}, function(err, page){
     if(err){
         console.log(err)
     }
@@ -52,14 +52,17 @@ Controller.getEditView = function(req, res){
  Controller.create = function (req, res) {
     console.log(req.body);
     req.body.user = req.user._id;
-    Page.create(req.body, function(err, result){
+    Page.create(req.body, function(err, page){
         if(err){
-            req.flash("createErrorMessage", "page Create Error" + JSON.stringify(err));
-            res.redirect('/admin/pages');
+
+            // req.flash("createErrorMessage", "page Create Error" + JSON.stringify(err));
+            // res.redirect('/admin/pages');
+            res.status(500).json(err);
         }
         else{
-            req.flash("createSuccessMessage", "page Created Successfully");
-            res.redirect('/admin/pages');
+            // req.flash("createSuccessMessage", "page Created Successfully");
+            // res.redirect('/admin/pages');
+            res.status(200).json({message: "Page successfully created!", slug: page.slug});
         }
     })
 };
@@ -68,12 +71,14 @@ Controller.getEditView = function(req, res){
 Controller.update = function (req, res) {
     req.body.user = req.user._id;
     console.log(req.body)
-    Page.findOneAndUpdate({_id: req.params.id}, req.body, function(err, result){
+    Page.findOneAndUpdate({_id: req.params.id}, req.body, {"new": true}, function(err, page){
         if(err){
             console.log(err);
+            res.status(500).json(err);
         }
         else{
-            res.redirect('/admin/pages');
+            // res.redirect('/admin/pages');
+            res.status(200).json({message: "Page successfully updated!", slug: page.slug});
         }
     })
 };
