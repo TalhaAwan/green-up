@@ -3,6 +3,8 @@
 
 const async = require ('async');
 const moment = require('moment');
+var fs = require('fs');
+var path = require('path');
 const Page = require ( './page.model').model;
 const Comment = require ( '../comment/comment.model').model;
 const config = require ( '../../config/environment');
@@ -35,7 +37,7 @@ Controller.getCreateView = function(req, res){
 
 
 Controller.getEditView = function(req, res){
-   Page.findOne({_id: req.params.id}, function(err, page){
+ Page.findOne({_id: req.params.id}, function(err, page){
     if(err){
         res.status(500).json(err);
     }
@@ -77,40 +79,78 @@ Controller.update = function (req, res) {
 /**
  * Get a single user
  */
- Controller.show = function (req, res, next) {
-    Page.findOne({slug: req.params.slug}, function(err, page){
-        if(err){
+//  Controller.show = function (req, res, next) {
+//     Page.findOne({slug: req.params.slug}, function(err, page){
+//         if(err){
+//             var err = new Error('Oops! Something Went Wrong');
+//             err.status = 500;
+//             next(err);
+//         }
+//         else if(!page){
+//             var err = new Error('Oops! The Page Cannot Be Found');
+//             err.status = 404;
+//             next(err);
+//         }
+//         else{
+//            Comment.find({page: page._id}, function(err, comments){
+//             if(err){e
+//                 callback(err);
+//             }
+//             else{
+//               res.render('page/show', {
+//                 page: page,
+//                 comments: comments,
+//                 moment: moment
+//             })
+//           }
+
+//       })
+
+//            .limit(50)
+//            .sort({ 'createdAt': 1 })
+
+
+//        }
+//    })
+// };
+
+
+Controller.show = function(req, res, next){
+
+    var dir = path.join(__dirname, "./json/"); // your directory
+
+    var files = fs.readdirSync(dir);
+    files.sort(function(a, b) {
+     return fs.statSync(dir + a).mtime.getTime() - 
+     fs.statSync(dir + b).mtime.getTime();
+ });
+    console.log(files)
+    if (fs.existsSync(path.join(__dirname, "./json/"+req.params.slug+".json"))) {
+        console.log("File exists");
+        var page;
+        try{
+            page = require("./json/"+req.params.slug)
+        }
+        catch(err){
             var err = new Error('Oops! Something Went Wrong');
             err.status = 500;
-            next(err);
+            return next(err);
         }
-        else if(!page){
-            var err = new Error('Oops! The Page Cannot Be Found');
-            err.status = 404;
-            next(err);
-        }
-        else{
-           Comment.find({page: page._id}, function(err, comments){
-            if(err){e
-                callback(err);
-            }
-            else{
-              res.render('page/show', {
-                page: page,
-                comments: comments,
-                moment: moment
-            })
-          }
+        console.log(page)
+        res.render('page/show', {
+            page: page,
+            comments: [],
+            moment: moment
+        });
+    }
+    else{
+        console.log("File doesn't exist");
+        var err = new Error('Oops! The Page Cannot Be Found');
+        err.status = 404;
+        next(err);
+    }
 
-      })
-
-           .limit(50)
-           .sort({ 'createdAt': 1 })
-
-
-       }
-   })
-};
+}
 
 
 Controller.comments = function (req, res) {

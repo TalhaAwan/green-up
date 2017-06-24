@@ -2,6 +2,8 @@
 
 
 const Page = require ( '../page.model').model;
+const fs = require('fs');
+const path = require('path');
 const config = require ( '../../../config/environment');
 const Controller = {};
 
@@ -49,23 +51,37 @@ Controller.getEditView = function(req, res){
 /**
  * Create a new page
  */
- Controller.create = function (req, res) {
-    console.log(req.body);
-    req.body.user = req.user._id;
-    Page.create(req.body, function(err, page){
-        if(err){
+//  Controller.create = function (req, res) {
+//     console.log(req.body);
+//     req.body.user = req.user._id;
+//     Page.create(req.body, function(err, page){
+//         if(err){
 
-            // req.flash("createErrorMessage", "page Create Error" + JSON.stringify(err));
-            // res.redirect('/admin/pages');
-            res.status(500).json(err);
-        }
-        else{
-            // req.flash("createSuccessMessage", "page Created Successfully");
-            // res.redirect('/admin/pages');
-            res.status(200).json({message: "Page successfully created!", slug: page.slug});
-        }
-    })
-};
+//             // req.flash("createErrorMessage", "page Create Error" + JSON.stringify(err));
+//             // res.redirect('/admin/pages');
+//             res.status(500).json(err);
+//         }
+//         else{
+//             // req.flash("createSuccessMessage", "page Created Successfully");
+//             // res.redirect('/admin/pages');
+//             res.status(200).json({message: "Page successfully created!", slug: page.slug});
+//         }
+//     })
+// };
+
+
+Controller.create = function(req, res){
+    console.log("Here")
+    var page = new Page(req.body);
+    console.log(page)
+    try{
+            fs.writeFileSync(path.join(__dirname, '../json/'+page.slug+'.json'), JSON.stringify(page, null, 4) , 'utf-8'); 
+    }
+    catch(err){
+        console.log(err)
+    }
+
+}
 
 
 Controller.update = function (req, res) {
