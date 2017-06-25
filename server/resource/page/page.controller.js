@@ -34,6 +34,7 @@ const Controller = {};
 
 
 Controller.index = function (req, res, next) {
+    console.log("Here")
 
     var pageNum;
     var arrIndex;

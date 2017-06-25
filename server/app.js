@@ -7,8 +7,8 @@
  const cluster = require('cluster');
 
  const express = require('express');
- const mongoose = require('mongoose');
- mongoose.Promise = require('bluebird');
+ // const mongoose = require('mongoose');
+ // mongoose.Promise = require('bluebird');
  const config = require('./config/environment');
 
 // Connect to MongoDB
