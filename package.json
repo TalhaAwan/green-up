@@ -30,6 +30,7 @@
     "passport-local": "^1.0.0",
     "proxyquire": "^1.7.11",
     "randomstring": "^1.1.5",
+    "read-multiple-files": "^1.1.1",
     "sanitize-html": "^1.14.1",
     "serve-favicon": "^2.3.2",
     "shrink-ray": "^0.1.3",

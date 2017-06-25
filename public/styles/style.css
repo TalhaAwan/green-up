@@ -6,12 +6,24 @@ html, body{
 
 p { margin-bottom: 20px; }
 
-a {
+a, .pagination>li>a {
     color: #0288D1;
 }
 
-a:hover {
+a:hover{
     color: #03A9F4;
+}
+
+.pagination>li>a:hover {
+    background-color: #B3E5FC;
+    border-color: #B3E5FC;
+    color: #0288D1;
+}
+
+
+.pagination>.active>a, .pagination>.active>a:hover {
+    background-color: #03A9F4;
+    border-color: #03A9F4
 }
 
 

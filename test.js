@@ -33,3 +33,16 @@ submissionSchema.pre('remove', function(next) {
 });
 
 var Submission = mongoose.model('Submission', submissionSchema);
+
+
+
+var paginate = require('paginate')();
+var data = new Array(95);
+ 
+var PER_PAGE = 10;
+var currentPage = 6;
+ 
+var pagination = paginate.page(data.length, PER_PAGE, currentPage);
+var html = pagination.render({ baseUrl: '/' });
+
+console.log(html)

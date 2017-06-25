@@ -34,18 +34,43 @@ Controller.getCreateView = function(req, res){
 }
 
 
-Controller.getEditView = function(req, res){
- Page.findOne({_id: req.params.id}, function(err, page){
-    if(err){
-        console.log(err)
-    }
-    else{
-        console.log(page)
+// Controller.getEditView = function(req, res){
+//  Page.findOne({_id: req.params.id}, function(err, page){
+//     if(err){
+//         console.log(err)
+//     }
+//     else{
+//         console.log(page)
+//         res.render('page/admin/edit', {
+//             page: page
+//         });
+//     }
+// })
+// }
+
+
+
+Controller.getEditView = function(req, res, next){
+ if (fs.existsSync(path.join(__dirname, "../json/"+req.params.id+".json"))) {
+        
+        var page;
+        try{
+            page = JSON.parse(fs.readFileSync(path.join(__dirname, "../json/"+req.params.id+".json")));
+        }
+        catch(err){
+            var err = new Error('Oops! Something Went Wrong');
+            err.status = 500;
+            return next(err);
+        }
         res.render('page/admin/edit', {
             page: page
         });
     }
-})
+    else{
+        var err = new Error('Oops! The Page Cannot Be Found');
+        err.status = 404;
+        next(err);
+    }
 }
 
 /**
@@ -71,49 +96,125 @@ Controller.getEditView = function(req, res){
 
 
 Controller.create = function(req, res){
-    console.log("Here")
     var page = new Page(req.body);
-    console.log(page)
-    try{
-            fs.writeFileSync(path.join(__dirname, '../json/'+page.slug+'.json'), JSON.stringify(page, null, 4) , 'utf-8'); 
+    if (fs.existsSync(path.join(__dirname, "../json/"+page.slug+".json"))) {
+        console.log("File exists");
+        return res.status(400).json({"message": "file already exists"});
+    }
+    else{
+       try{
+        fs.writeFileSync(path.join(__dirname, '../json/'+page.slug+'.json'), JSON.stringify(page, null, 4) , 'utf-8');
+            var dir = path.join(__dirname, "../json/"); // your director
+            var files = fs.readdirSync(dir);
+            files.sort(function(a, b) {
+
+               // return fs.statSync(dir + a).mtime.getTime() - 
+               // fs.statSync(dir + b).mtime.getTime() < 1;
+
+               return new Date(fs.statSync(dir + b).mtime.getTime()) - new Date(fs.statSync(dir + a).mtime.getTime());
+           });
+            console.log(files);
+        fs.writeFileSync(path.join(__dirname, '../sorted-pages.json'), JSON.stringify(files, null, 4) , 'utf-8');
+        return res.status(200).json({message: "Page successfully created!", slug: page.slug});
     }
     catch(err){
-        console.log(err)
-    }
+       return res.status(500).json(err);
+       console.log(err)
+   }
+}
+
 
 }
 
 
+// Controller.update = function (req, res) {
+//     req.body.user = req.user._id;
+//     console.log(req.body)
+//     Page.findOneAndUpdate({_id: req.params.id}, req.body, {"new": true}, function(err, page){
+//         if(err){
+//             console.log(err);
+//             res.status(500).json(err);
+//         }
+//         else{
+//             // res.redirect('/admin/pages');
+//             res.status(200).json({message: "Page successfully updated!", slug: page.slug});
+//         }
+//     })
+// };
+
 Controller.update = function (req, res) {
-    req.body.user = req.user._id;
-    console.log(req.body)
-    Page.findOneAndUpdate({_id: req.params.id}, req.body, {"new": true}, function(err, page){
-        if(err){
-            console.log(err);
-            res.status(500).json(err);
+     var page;
+        try{
+            page = JSON.parse(fs.readFileSync(path.join(__dirname, "../json/"+req.params.id+".json")));
         }
-        else{
-            // res.redirect('/admin/pages');
-            res.status(200).json({message: "Page successfully updated!", slug: page.slug});
+        catch(err){
+            var err = new Error('Oops! Something Went Wrong');
+            err.status = 500;
+            return next(err);
         }
-    })
+        var updatedPage = new Page(req.body);
+        updatedPage.createdAt = page.createdAt;
+
+    try{
+        fs.writeFileSync(path.join(__dirname, '../json/'+updatedPage.slug+'.json'), JSON.stringify(updatedPage, null, 4) , 'utf-8');
+                    var dir = path.join(__dirname, "../json/"); // your director
+            var files = fs.readdirSync(dir);
+            files.sort(function(a, b) {
+
+               // return fs.statSync(dir + a).mtime.getTime() - 
+               // fs.statSync(dir + b).mtime.getTime() < 1;
+
+               return new Date(fs.statSync(dir + b).mtime.getTime()) - new Date(fs.statSync(dir + a).mtime.getTime());
+           });
+            console.log(files);
+        fs.writeFileSync(path.join(__dirname, '../sorted-pages.json'), JSON.stringify(files, null, 4) , 'utf-8');
+        return res.status(200).json({message: "Page successfully updated!", slug: updatedPage.slug});
+    }
+    catch(err){
+       return res.status(500).json(err);
+   }
+
+
 };
 
 /**
  * Get a single user
  */
- Controller.show = function (req, res) {
-    Page.findOne({slug: req.params.slug}, function(err, page){
-        if(err){
-            console.log(err)
+//  Controller.show = function (req, res) {
+//     Page.findOne({slug: req.params.slug}, function(err, page){
+//         if(err){
+//             console.log(err)
+//         }
+//         else{
+//             console.log(page)
+//             res.render('page/admin/show', {
+//                 page: page
+//             })
+//         }
+//     })
+// };
+
+
+ Controller.show = function (req, res, next) {
+ if (fs.existsSync(path.join(__dirname, "../json/"+req.params.slug+".json"))) {
+        var page;
+        try{
+            page = JSON.parse(fs.readFileSync(path.join(__dirname, "../json/"+req.params.slug+".json")));
         }
-        else{
-            console.log(page)
-            res.render('page/admin/show', {
-                page: page
-            })
+        catch(err){
+            var err = new Error('Oops! Something Went Wrong');
+            err.status = 500;
+            return next(err);
         }
-    })
+        res.render('page/admin/show', {
+            page: page
+        });
+    }
+    else{
+        var err = new Error('Oops! The Page Cannot Be Found');
+        err.status = 404;
+        next(err);
+    }
 };
 
 

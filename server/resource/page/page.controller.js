@@ -3,6 +3,8 @@
 
 const async = require ('async');
 const moment = require('moment');
+const readMultipleFiles = require('read-multiple-files');
+const paginate = require('paginate')();
 var fs = require('fs');
 var path = require('path');
 const Page = require ( './page.model').model;
@@ -14,20 +16,78 @@ const Controller = {};
  * Get list of users
  * restriction: 'admin'
  */
- Controller.index = function (req, res) {
+//  Controller.index = function (req, res) {
 
-    console.log("here in page")
-    Page.findActive(function(err, pages){
-        if(err){
-            res.status(500)
+//     console.log("here in page")
+//     Page.findActive(function(err, pages){
+//         if(err){
+//             res.status(500)
+//         }
+//         else{
+//             res.render('page/index', {
+//                 pages: pages
+//             });
+
+//         }
+//     })
+// };
+
+
+Controller.index = function (req, res, next) {
+
+    var pageNum;
+    var arrIndex;
+    var itemsPerPage = 2;
+    var totalPages;
+    if(!isNaN(req.query.page)){
+        pageNum = parseInt(req.query.page);
+        if(pageNum <= 1){
+          arrIndex = 0;
+          pageNum = 1;
         }
         else{
-            res.render('page/index', {
-                pages: pages
-            });
-
+            arrIndex = pageNum*itemsPerPage;  
         }
-    })
+        
+    }
+    else{
+        pageNum = 1;
+        arrIndex = 0;
+    }
+
+    const dir = path.join(__dirname, "./json/");
+    var sortedPages = JSON.parse(fs.readFileSync(path.join(__dirname, "./sorted-pages.json")));
+    totalPages = sortedPages.length;
+    sortedPages = sortedPages.splice(arrIndex? arrIndex-itemsPerPage : 0, itemsPerPage);
+    if(!sortedPages.length){
+        var err = new Error('Oops! The Page Cannot Be Found');
+        err.status = 404;
+        return next(err);
+    }
+
+    sortedPages = sortedPages.map(function(sp){ return dir+sp});
+ 
+     var pagination = paginate.page(totalPages, itemsPerPage, pageNum);
+     var paginationHtml = pagination.render({ baseUrl: '/' });
+
+
+
+    readMultipleFiles(sortedPages, 'utf8', function(err, contents){
+      if (err) {
+        res.status(500)
+    }
+    else{
+        // console.log(contents.length)
+
+        res.render('page/index', {
+                pages: contents.map(function(c){return JSON.parse(c)}),
+                paginationHtml : paginationHtml
+            });
+    }
+
+
+});
+  
 };
 
 
@@ -117,31 +177,39 @@ Controller.update = function (req, res) {
 
 Controller.show = function(req, res, next){
 
-    var dir = path.join(__dirname, "./json/"); // your directory
+ //    var dir = path.join(__dirname, "./json/"); // your directory
 
-    var files = fs.readdirSync(dir);
-    files.sort(function(a, b) {
-     return fs.statSync(dir + a).mtime.getTime() - 
-     fs.statSync(dir + b).mtime.getTime();
- });
-    console.log(files)
+ //    var files = fs.readdirSync(dir);
+ //    files.sort(function(a, b) {
+
+ //     return fs.statSync(dir + a).mtime.getTime() - 
+ //     fs.statSync(dir + b).mtime.getTime() < 1;
+ // });
+    // console.log(files)
+    
+    console.time('someFunction');
+
+
+
+
     if (fs.existsSync(path.join(__dirname, "./json/"+req.params.slug+".json"))) {
         console.log("File exists");
         var page;
         try{
-            page = require("./json/"+req.params.slug)
+            page = JSON.parse(fs.readFileSync(path.join(__dirname, "./json/"+req.params.slug+".json")));
         }
         catch(err){
             var err = new Error('Oops! Something Went Wrong');
             err.status = 500;
             return next(err);
         }
-        console.log(page)
         res.render('page/show', {
             page: page,
             comments: [],
             moment: moment
         });
+
+        console.timeEnd('someFunction');
     }
     else{
         console.log("File doesn't exist");
@@ -156,7 +224,6 @@ Controller.show = function(req, res, next){
 Controller.comments = function (req, res) {
     Comment.find({page: req.params.id, _id: { $gt: req.query.commentId }}, function(err, comments){
         if(err){
-            console.log(err)
             res.status(500).json(err);
         }
         else if(!comments || !comments.length){

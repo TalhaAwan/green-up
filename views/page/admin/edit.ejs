@@ -65,6 +65,7 @@
 								<div id="tempElem"><?- page.content ?></div>
 								<div id="summernote"></div>
 								<input id="page-id" class="hidden" value="<?= page._id ?>">
+								<input id="page-slug" class="hidden" value="<?= page.slug ?>">
 								<textarea class="hidden" id="content" name="content" rows="4" cols="50"></textarea>
 							</div>
 						</div>
@@ -131,11 +132,12 @@
 			$("#content").html($('#summernote').summernote('code'));
 			var data = {};
 			var id = $("#page-id").val();
+			var slug = $("#page-slug").val();
 			$("#page-form").serializeArray().map(function(x){data[x.name] = x.value;}); 
 			if(isFilled(data)){
 				$(this).attr('disabled', 'disabled'); 
 				$.ajax({
-					url: "/admin/pages/"+id,
+					url: "/admin/pages/"+slug,
 					data: data,
 					dataType: 'json',
 					type: 'PUT',
