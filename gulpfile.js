@@ -40,7 +40,7 @@ gulp.task('build-src-css', function() {
 
 gulp.task('build-css', function() {
     return gulp.src([
-        "public/libs/bootstrap/dist/css/bootstrap.min.css",
+        // "public/libs/bootstrap/dist/css/bootstrap.min.css",
         "public/template/css/modern-business.css",
         "public/styles/style.css",
         // "public/libs/font-awesome/css/font-awesome.css"
@@ -64,8 +64,9 @@ gulp.task('build-src-js', function() {
 
 gulp.task('build-js', function() {
     return gulp.src([
-        "public/libs/jquery/dist/jquery.min.js",
-        "public/libs/bootstrap/dist/js/bootstrap.min.js",
+        // "public/libs/jquery/dist/jquery.min.js",
+        // "public/libs/bootstrap/dist/js/bootstrap.min.js",
+        "public/libs/levenshtein/lib/levenshtein.js",
         "views/**/*.js"
     ])
         .pipe(concat('app.min.js'))

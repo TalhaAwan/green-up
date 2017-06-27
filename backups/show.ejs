@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<?include ../partials/head ?>
+
+<body>
+
+
+
+ <? include ../partials/header ?>
+
+
+
+ <!-- Page Content -->
+ <div class="container">
+   <div  class="row">
+     <div class="col-md-1">
+     </div>
+     <div class="col-md-6">
+      <!-- Page Heading -->
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header h1-custom">
+            <?= page.title ?>
+          </h1>
+
+        </div>
+      </div>
+      <!-- /.row -->
+
+
+      <div class="row">
+        <div class="col-lg-12 text-block">
+          <div class="row ">
+
+            <div  class="col-md-12">
+              <?- page.content ?>
+            </div>
+
+
+
+        </div>
+      </div>
+    </div>
+    <!-- /.row -->
+
+    <div class="row">
+      <div class="col-lg-12">
+
+       <div id="page-comments">
+         <div class="page-header">
+          <i>Comments</i>
+        </div>
+        <? include ./component/page/comment  ?>
+      </div>
+      <br>
+
+      <? if (comments && comments.length) {?>
+      <a href="javascript:" id="load-more-<?= page.id ?>" class="small-font"  onclick="loadMoreComments('<?=page._id?>')">load more comments</a> <br><br>
+      <? } ?>
+
+      <form id="page-comment<?=page._id?>" name="page-comment" >
+
+        <div class="row form-group">
+          <div class="col-sm-6">
+            <input class="form-control" type="text" name="name" placeholder="Name" required>
+          </div>
+        </div>
+        <div class="row form-group essential">
+          <div class="col-sm-6">
+            <input class="form-control" type="text" name="essential" placeholder="Essential">
+          </div>
+        </div>
+        <div class="row form-group">
+         <div class="col-sm-12">
+          <textarea class="form-control" id="text" rows="7" name="text" placeholder="Comment" required></textarea>
+        </div>
+      </div>
+      <div class="row form-group">
+       <div class="col-sm-12">
+         <input  id="rtl" type="checkbox" name="rtl" value="true"> <span class="small-gray-font">Align right to left</span><br> 
+       </div>
+     </div>
+
+     <button  id="add-comment-btn"  type="button" class="btn btn-primary primary-button" onclick="addComment('<?=page._id?>')" >Add
+     </button>
+   </form>
+
+ </div>
+</div>
+
+</div>
+
+<div class="col-md-1">
+</div>
+
+<div class="col-md-4">
+  <div class="row related-container">
+    <div class="col-lg-12">
+      <h4>
+        Related
+      </h4>
+    </div>
+  </div>
+
+  <div class="row ">
+    <div class="col-lg-12 related-block">
+      <div>
+        <a href="https://stackoverflow.com/questions/6382023/changing-the-color-of-an-hr-element">Changing the color of an hr element</a>
+      </div>
+      <div>
+        <a href="https://stackoverflow.com/questions/6382023/changing-the-color-of-an-hr-element">Changing the color of an hr element Changing the color of an hr element Changing the color of an hr element</a>
+      </div>
+
+      <div>
+        <a href="https://stackoverflow.com/questions/44465182/how-do-i-avoid-needing-to-use-parsefloat-int-number-in-the-first-place-with-j/44466507#44466507">How do I avoid needing to use parseFloat/Int, number() in the first place with JavaScript?</a>
+      </div>
+
+    </div>
+  </div>
+</div>
+<!-- /.container -->
+
+</div>
+</div>
+</div>
+<!-- /#wrapper -->
+<? include ../partials/footer ?>
+
+
+</body>
+
+</html>
+
+

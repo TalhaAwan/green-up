@@ -7,16 +7,16 @@
  const cluster = require('cluster');
 
  const express = require('express');
- // const mongoose = require('mongoose');
- // mongoose.Promise = require('bluebird');
+ const mongoose = require('mongoose');
+ mongoose.Promise = require('bluebird');
  const config = require('./config/environment');
 
 // Connect to MongoDB
-// mongoose.connect(config.mongo.uri, config.mongo.options);
-// mongoose.connection.on('error', function(err) {
-// 	console.error('MongoDB connection error: '+ err);
-//   process.exit(-1); // eslint-disable-line no-process-exit
-// });
+mongoose.connect(config.mongo.uri, config.mongo.options);
+mongoose.connection.on('error', function(err) {
+	console.error('MongoDB connection error: '+ err);
+  process.exit(-1); // eslint-disable-line no-process-exit
+});
 
 // Populate databases with sample data
 if(config.seedDB) {
