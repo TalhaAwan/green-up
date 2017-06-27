@@ -77,6 +77,11 @@ a:hover{
     background-color: #0288D1;
     border-color: #03A9F4;
 }
+
+.primary-button:hover, .primary-button:focus {
+    background-color: #03a9f4;
+    border-color: #0288D1;
+}
 /*.navbar-inverse {
 	background-color: #fafafb;
 	border-color: lightgray
