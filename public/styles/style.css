@@ -51,6 +51,12 @@ a:hover{
 
 }
 
+.h1-underline {
+    border-top: 0.7rem solid #757575; 
+    border-radius: 25rem;
+    margin-bottom: 2rem;
+}
+
 h2 {
     font-size: 1.71rem;
 }
