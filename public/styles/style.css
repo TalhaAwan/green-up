@@ -2,6 +2,7 @@ html, body{
     font-size: 14px;
     line-height: 1;
     font-family: Helvetica, Arial, sans-serif;
+    color: #212121;
 }
 
 p { margin-bottom: 20px; }
@@ -30,10 +31,24 @@ a:hover{
 .text-block {
     font-size: 1.25rem;
     line-height: 1.8;
+    margin-top: 3rem;
+    /*    border-top: 1px dotted #BDBDBD;*/
 }
 
+.h1-container {
+    margin-top: 3rem;
+    /*margin-bottom: 3rem;*/
+}
+
+
 .h1-custom {
-    font-size: 3.2rem;
+    font-size: 4.2rem;
+}
+
+.page-header{
+    /*    border-bottom: 1px dotted #BDBDBD;*/
+    border-bottom: transparent;
+
 }
 
 h2 {
@@ -47,6 +62,7 @@ h3 {
 h2, h3, .h1-custom {
     font-weight: 700;
     line-height: 1.8;
+
 }
 
 
@@ -144,8 +160,8 @@ h2, h3, .h1-custom {
 }
 
 .navbar-inverse .navbar-brand{
-   color: #ffffff;
-   font-weight: 900;
+ color: #ffffff;
+ font-weight: 900;
 }
 
 
@@ -222,10 +238,7 @@ footer {
     display: none;
 }
 
-.page-header{
-    border-bottom: 1px dotted #BDBDBD;
-    margin: 40px 0 30px;
-}
+
 
 
 #page-comments{
