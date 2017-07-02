@@ -114,13 +114,13 @@ h2, h3, .h1-custom {
 
 
 .primary-button{
-    background-color: #0288D1;
-    border-color: #03A9F4;
+    background-color: #03A9F4;
+    border-color: #0288D1;
 }
 
 .primary-button:hover, .primary-button:focus {
-    background-color: #03a9f4;
-    border-color: #0288D1;
+    background-color: #0288D1;
+    border-color: #03A9F4;
 }
 /*.navbar-inverse {
 	background-color: #fafafb;
