@@ -10,6 +10,7 @@ const auth = require('../../auth/auth.service');
 const router = new Router();
 
 router.get('/',  controller.index);
+router.get('/directory',  controller.directory);
 // router.get('/show/:id', controller.show);
 // router.delete('/:id', controller.destroy);
 // router.put('/:id', controller.update);

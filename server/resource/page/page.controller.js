@@ -33,6 +33,67 @@ const Controller = {};
 // };
 
 
+
+
+Controller.directory = function (req, res, next) {
+    console.log("Here")
+
+    var pageNum;
+    var arrIndex;
+    var itemsPerPage = 2;
+    var totalPages;
+    if(!isNaN(req.query.page)){
+        pageNum = parseInt(req.query.page);
+        if(pageNum <= 1){
+          arrIndex = 0;
+          pageNum = 1;
+        }
+        else{
+            arrIndex = pageNum*itemsPerPage;  
+        }
+        
+    }
+    else{
+        pageNum = 1;
+        arrIndex = 0;
+    }
+
+    const dir = path.join(__dirname, "./json/");
+    var sortedPages = JSON.parse(fs.readFileSync(path.join(__dirname, "./sorted-pages.json")));
+    totalPages = sortedPages.length;
+    sortedPages = sortedPages.splice(arrIndex? arrIndex-itemsPerPage : 0, itemsPerPage);
+    if(!sortedPages.length){
+        var err = new Error('Oops! The Page Cannot Be Found');
+        err.status = 404;
+        return next(err);
+    }
+
+    sortedPages = sortedPages.map(function(sp){ return dir+sp});
+ 
+     var pagination = paginate.page(totalPages, itemsPerPage, pageNum);
+     var paginationHtml = pagination.render({ baseUrl: '/directory/' });
+
+
+
+    readMultipleFiles(sortedPages, 'utf8', function(err, contents){
+      if (err) {
+        res.status(500)
+    }
+    else{
+        // console.log(contents.length)
+
+        res.render('page/index', {
+                pages: contents.map(function(c){return JSON.parse(c)}),
+                paginationHtml : paginationHtml
+            });
+    }
+
+
+});
+  
+};
+
+
 Controller.index = function (req, res, next) {
     console.log("Here")
 
