@@ -3,6 +3,7 @@
 
 const async = require ('async');
 const moment = require('moment');
+const glob = require("glob");
 const readMultipleFiles = require('read-multiple-files');
 const paginate = require('paginate')();
 var fs = require('fs');
@@ -32,11 +33,18 @@ const Controller = {};
 //     })
 // };
 
+console.log(path.join(__dirname, "json"))
+console.log(path.resolve(process.cwd(), "/") )
 
+    glob("*", {cwd: './server/resource/page/json'}, function (er, files) {
+        console.log(er, files)
+})
 
 
 Controller.directory = function (req, res, next) {
-    console.log("Here")
+    console.log("Here in directory");
+
+
 
     var pageNum;
     var arrIndex;
@@ -82,7 +90,7 @@ Controller.directory = function (req, res, next) {
     else{
         // console.log(contents.length)
 
-        res.render('page/index', {
+        res.render('page/directory', {
                 pages: contents.map(function(c){return JSON.parse(c)}),
                 paginationHtml : paginationHtml
             });
