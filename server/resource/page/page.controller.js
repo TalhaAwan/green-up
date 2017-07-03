@@ -13,42 +13,15 @@ const Comment = require ( '../comment/comment.model').model;
 const config = require ( '../../config/environment');
 const Controller = {};
 
-/**
- * Get list of users
- * restriction: 'admin'
- */
-//  Controller.index = function (req, res) {
-
-//     console.log("here in page")
-//     Page.findActive(function(err, pages){
-//         if(err){
-//             res.status(500)
-//         }
-//         else{
-//             res.render('page/index', {
-//                 pages: pages
-//             });
-
-//         }
-//     })
-// };
-
-console.log(path.join(__dirname, "json"))
-console.log(path.resolve(process.cwd(), "/") )
-
-    glob("*", {cwd: './server/resource/page/json'}, function (er, files) {
-        console.log(er, files)
-})
 
 
 Controller.directory = function (req, res, next) {
     console.log("Here in directory");
 
-
-
+    const dir = path.join(__dirname, "./json/");
     var pageNum;
     var arrIndex;
-    var itemsPerPage = 2;
+    var itemsPerPage = 5;
     var totalPages;
     if(!isNaN(req.query.page)){
         pageNum = parseInt(req.query.page);
@@ -65,39 +38,42 @@ Controller.directory = function (req, res, next) {
         pageNum = 1;
         arrIndex = 0;
     }
-
-    const dir = path.join(__dirname, "./json/");
-    var sortedPages = JSON.parse(fs.readFileSync(path.join(__dirname, "./sorted-pages.json")));
-    totalPages = sortedPages.length;
-    sortedPages = sortedPages.splice(arrIndex? arrIndex-itemsPerPage : 0, itemsPerPage);
-    if(!sortedPages.length){
-        var err = new Error('Oops! The Page Cannot Be Found');
-        err.status = 404;
-        return next(err);
-    }
-
-    sortedPages = sortedPages.map(function(sp){ return dir+sp});
- 
-     var pagination = paginate.page(totalPages, itemsPerPage, pageNum);
-     var paginationHtml = pagination.render({ baseUrl: '/directory/' });
-
-
-
-    readMultipleFiles(sortedPages, 'utf8', function(err, contents){
-      if (err) {
-        res.status(500)
-    }
-    else{
-        // console.log(contents.length)
-
-        res.render('page/directory', {
-                pages: contents.map(function(c){return JSON.parse(c)}),
+    
+    glob("*json", {cwd: './server/resource/page/json'}, function (err, files) {
+        console.log(err, files);
+        if (err) {
+            return res.status(500)
+        }
+        else if(!files.length){
+            // var err = new Error('Oops! The Page Cannot Be Found');
+            // err.status = 404;
+            // return next(err);
+            res.render('page/directory', {
+                pages: [],
                 paginationHtml : paginationHtml
             });
-    }
+        }
+        else{
+            totalPages = files.length;
+            files = files.splice(arrIndex? arrIndex-itemsPerPage : 0, itemsPerPage);
+            files = files.map(function(sp){ return dir+sp});
 
+            var pagination = paginate.page(totalPages, itemsPerPage, pageNum);
+            var paginationHtml = pagination.render({ baseUrl: '/directory/' });
+            readMultipleFiles(files, 'utf8', function(err, contents){
+                if (err) {
+                    res.status(500)
+                }
+                else{
+                    res.render('page/directory', {
+                        pages: contents.map(function(c){return JSON.parse(c)}),
+                        paginationHtml : paginationHtml
+                    });
+                }
+            });
+        }
+    });
 
-});
   
 };
 
@@ -206,61 +182,9 @@ Controller.update = function (req, res) {
     })
 };
 
-/**
- * Get a single user
- */
-//  Controller.show = function (req, res, next) {
-//     Page.findOne({slug: req.params.slug}, function(err, page){
-//         if(err){
-//             var err = new Error('Oops! Something Went Wrong');
-//             err.status = 500;
-//             next(err);
-//         }
-//         else if(!page){
-//             var err = new Error('Oops! The Page Cannot Be Found');
-//             err.status = 404;
-//             next(err);
-//         }
-//         else{
-//            Comment.find({page: page._id}, function(err, comments){
-//             if(err){e
-//                 callback(err);
-//             }
-//             else{
-//               res.render('page/show', {
-//                 page: page,
-//                 comments: comments,
-//                 moment: moment
-//             })
-//           }
-
-//       })
-
-//            .limit(50)
-//            .sort({ 'createdAt': 1 })
-
-
-//        }
-//    })
-// };
 
 
 Controller.show = function(req, res, next){
-
- //    var dir = path.join(__dirname, "./json/"); // your directory
-
- //    var files = fs.readdirSync(dir);
- //    files.sort(function(a, b) {
-
- //     return fs.statSync(dir + a).mtime.getTime() - 
- //     fs.statSync(dir + b).mtime.getTime() < 1;
- // });
-    // console.log(files)
-    
-    console.time('someFunction');
-
-
-
 
     if (fs.existsSync(path.join(__dirname, "./json/"+req.params.slug+".json"))) {
         console.log("File exists");
