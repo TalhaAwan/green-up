@@ -27,7 +27,6 @@ module.exports = {
                 safe: true
             }
         },
-        // uri: process.env.IP || 'mongodb://admin:tarjuma@ds117919.mlab.com:17919/tarjuma'
         uri: 'mongodb://localhost/greenUp'
     },
 
