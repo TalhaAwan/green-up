@@ -1,1 +1,1 @@
-MEAN stack Boilerplate Application. The server side code structure has largely been taken from yoeman angular-fullstack generated code and modified.
+#GreenUp
